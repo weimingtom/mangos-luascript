@@ -1,0 +1,17 @@
+HOWTO run it ( by Derex )
+
+ON WINDOWS:
+-----------
+1.you need to download boost (boost.org)
+2.extract boost and copy /boost dir ... ( you need to have \src\bindings\luascript\boost\cast.hpp in this order )
+3.Open your mangos-project with vs2003 
+4.remove script project
+5.File->add project->add existing project and navigate to luascript.vcproj
+6.copy contents of lua-scripts folder where your mangosd.exe is , so that Masterscript.lua is just where is your mangosd.exe
+8.you are ready ... compile and run ... :)
+
+-----------
+ON LINUX
+-----------
+STILL UNABLE 
+i decided to first make it on one platform ,then port it to other ( i cant do the 2 at the same time )
