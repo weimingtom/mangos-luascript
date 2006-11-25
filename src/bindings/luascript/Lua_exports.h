@@ -5,4 +5,4 @@
 
 int lb_Export_Misc(lua_State* L);
 
-#endif LUA_EXPORTS_H
+#endif //LUA_EXPORTS_H

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2005,2006 MaNGOS <http://www.mangosproject.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  */
 
 #include "luainc.h"
-#include "LUA_Engine.h" 
+#include "LUA_Engine.h"
 
 
 int lb_export_Engine(lua_State *L)
@@ -26,3 +26,4 @@ int lb_export_Engine(lua_State *L)
 
 	return 0;
 	}
+
