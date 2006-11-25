@@ -7,6 +7,13 @@
 #include "Lua_uint64.h"
 #include "Log.h"
 #include "Mail.h"
+
+#ifndef WIN32
+#include "DynamicObject.h"
+#include "Spell.h"
+#include "SpellAuras.h"
+#endif
+
 #include "luainc.h"
 
 extern uint32 GetSkillLevel(Player *player,uint32 skill);
@@ -137,9 +144,9 @@ void lb_Object_SetUInt64Value( Object* ob ,uint16 index, lua_uint64& value )
 	ob->SetUInt64Value(index,value.m_val);
 	}
 
-class Spell;
-class Aura;
-class DynamicObject;
+ class Spell;
+ class Aura;
+ class DynamicObject;
 
 int lb_Export_Misc(lua_State* L)
 	{
@@ -233,19 +240,19 @@ module(L)
 //TODO export more
 module(L)
 [
-    class_<Aura >("Aura")
+    class_<Aura>("Aura")
 ];
 
 //TODO export more
 module(L)
 [
-    class_<Spell >("Spell")
+    class_<Spell>("Spell")
 ];
 
 //TODO export more
 module(L)
 [
-    class_<Quest >("Quest")
+    class_<Quest>("Quest")
 ];
 
 //TODO export more

@@ -119,7 +119,7 @@ lua_unit.def("setAttackTimer", &Unit::setAttackTimer )
 	.def("GetUnitBlockChance", &Unit::GetUnitBlockChance )
 	.def("GetUnitCriticalChance", &Unit::GetUnitCriticalChance )
 	.def("GetUnitMeleeSkill", &Unit::GetUnitMeleeSkill );
-	
+
 
 lua_unit.def("GetDefenceSkillValue", &Unit::GetDefenceSkillValue )
 	.def("GetPureDefenceSkillValue", &Unit::GetPureDefenceSkillValue )

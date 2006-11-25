@@ -19,12 +19,12 @@
 
 	lua_uint64::lua_uint64(const char* val)
 			{
-			this->m_val = atol(val);   //this isnt good _strtoui64 may be better 
+			this->m_val = atol(val);   //this isnt good _strtoui64 may be better
 			}
 
 	void lua_uint64::set(const char* val)
 			{
-			this->m_val = atol(val);   //this isnt good _strtoui64 may be better 
+			this->m_val = atol(val);   //this isnt good _strtoui64 may be better
 			}
 
 	void lua_uint64::set(lua_uint64& val)
@@ -80,7 +80,7 @@ using namespace luabind;
 		.def(constructor<>())
 		.def(constructor<const lua_uint64&>())
 		.def(constructor<const char*>())
-		.def("dump", lua_uint64::dump )
+                       /*.def("dump", lua_uint64::dump ) TMP FIX for linux build*/
 		.def("set", (void (lua_uint64::*)(const char*))&lua_uint64::set )
 		.def("set", (void (lua_uint64::*)(lua_uint64& val))&lua_uint64::set )
 		.def(self + lua_uint64())

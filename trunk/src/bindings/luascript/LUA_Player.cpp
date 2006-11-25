@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2005,2006 MaNGOS <http://www.mangosproject.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -134,13 +134,13 @@ lua_uint64 lb_Player_GetTarget(Player* pl )
 	return lua_uint64(pl->GetTarget());
 	}
 
-void lb_Player_SetSelection(Player* pl , lua_uint64 guid) 
+void lb_Player_SetSelection(Player* pl , lua_uint64 guid)
 	{
 	pl->SetSelection(guid.m_val);
 	}
 
 
-void lb_Player_SetTarget(Player* pl , lua_uint64 guid) 
+void lb_Player_SetTarget(Player* pl , lua_uint64 guid)
 	{
 	pl->SetTarget(guid.m_val);
 	}
@@ -356,12 +356,12 @@ module(L)
 	.def("SetLootGUID", &Player::SetLootGUID)
 	.def("SendOutOfRange", &Player::SendOutOfRange)
 	.def("PlaySound", &Player::PlaySound)
-	.def("SendAttackSwingCantAttack", &Player::SendAttackSwingCantAttack)
+	/*.def("SendAttackSwingCantAttack", &Player::SendAttackSwingCantAttack)
 	.def("SendAttackSwingCancelAttack", &Player::SendAttackSwingCancelAttack)
 	.def("SendAttackSwingDeadTarget", &Player::SendAttackSwingDeadTarget)
 	.def("SendAttackSwingNotStanding", &Player::SendAttackSwingNotStanding)
 	.def("SendAttackSwingNotInRange", &Player::SendAttackSwingNotInRange)
-	.def("SendAttackSwingBadFacingAttack", &Player::SendAttackSwingBadFacingAttack)
+            .def("SendAttackSwingBadFacingAttack", &Player::SendAttackSwingBadFacingAttack)*/
 	.def("SendExplorationExperience", &Player::SendExplorationExperience)
 	.def("SendMessageToOwnTeamSet", &Player::SendMessageToOwnTeamSet)
 	.def("SetPosition", &Player::SetPosition)
