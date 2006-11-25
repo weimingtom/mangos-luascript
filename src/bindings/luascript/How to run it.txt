@@ -1,5 +1,8 @@
 HOWTO run it ( by Derex )
 
+Note: for all platforms you will need to aply the sql patch in sql folder
+
+-----------
 ON WINDOWS:
 -----------
 1.you need to download boost (boost.org)
@@ -11,7 +14,32 @@ ON WINDOWS:
 8.you are ready ... compile and run ... :)
 
 -----------
-ON LINUX
+ON LINUX:
 -----------
-STILL UNABLE 
-i decided to first make it on one platform ,then port it to other ( i cant do the 2 at the same time )
+Still testing ...
+
+Warning: This will remove your existing scripts library ( better back it up )
+
+1.you need to download boost (boost.org)
+2.extract boost and copy /boost dir ... ( you need to have \src\bindings\luascript\boost\cast.hpp in this order )
+
+3.
+cd /to/your/mangos/src/dir
+cd ./src/bindings
+svn co http://mangos-luascript.googlecode.com/svn/trunk/src/bindings/luascript/ luascript
+svn cleanup universal
+rm -rf universal
+ln -s ./luascript ./universal
+
+4.now is the hard part
+cd /to/your/mangos/src/dir
+./configure <with your config options>
+make
+#do this as su-user
+su -c "make install"
+
+4.copy contents of lua-scripts folder where your mangosd is , so that Masterscript.lua is just where is your mangosd executable 
+
+To start mangos:
+cd /where/your/mangosd/executeble is/
+./mangosd
