@@ -56,12 +56,12 @@ void lb_Player_CLOSE_GOSSIP_MENU(Player* pl)
 
 void lb_Player_SEND_QUEST_DETAILS(Player* pl ,Quest *pQuest, lua_uint64 npcGUID, bool ActivateAccept)
 	{
-	pl->PlayerTalkClass->SendQuestDetails(pQuest,npcGUID.m_val,ActivateAccept);
+	pl->PlayerTalkClass->SendQuestGiverQuestDetails(pQuest,npcGUID.m_val,ActivateAccept);
 	}
 
 void lb_Player_SEND_REQUESTEDITEMS(Player* pl ,  Quest *pQuest, lua_uint64 npcGUID, bool Completable, bool CloseOnCancel )
 	{
-	pl->PlayerTalkClass->SendRequestedItems(pQuest,npcGUID.m_val,Completable,CloseOnCancel);
+	pl->PlayerTalkClass->SendQuestGiverRequestItems(pQuest,npcGUID.m_val,Completable,CloseOnCancel);
 	}
 
 void lb_Player_SEND_VENDORLIST(Player* pl , lua_uint64 guid )
@@ -291,8 +291,8 @@ module(L)
 	.def("SetQuestStatus", &Player::SetQuestStatus)
 	.def("GetQuestSlot", &Player::GetQuestSlot)
 	.def("AreaExplored", &Player::AreaExplored)
-	.def("ItemAdded", &Player::ItemAdded)
-	.def("ItemRemoved", &Player::ItemRemoved)
+	/*.def("ItemAdded", &Player::ItemAdded)*/
+	/*.def("ItemRemoved", &Player::ItemRemoved)*/
 	.def("KilledMonster", &Player::KilledMonster)
 	/*.def("CastedCreatureOrGO", &Player::CastedCreatureOrGO)/**/
 	.def("MoneyChanged", &Player::MoneyChanged)
