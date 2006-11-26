@@ -57,9 +57,9 @@ libMaNGOSScript_la_DEPENDENCIES = ./lua/lib/liblua.a \
 	./lua/lib/liblualib.a
 am_libMaNGOSScript_la_OBJECTS = LUA_Engine.lo LUA_Player.lo \
 	Lua_Creature.lo Lua_Unit.lo Lua_exports.lo Lua_uint64.lo \
-	ScriptMgr.lo sc_defines.lo system.lo class.lo class_info.lo \
-	class_registry.lo class_rep.lo create_class.lo error.lo \
-	find_best_match.lo function.lo implicit_cast.lo \
+	ScriptMgr.lo sc_defines.lo system.lo Lua_AI.lo class.lo \
+	class_info.lo class_registry.lo class_rep.lo create_class.lo \
+	error.lo find_best_match.lo function.lo implicit_cast.lo \
 	link_compatibility.lo object_rep.lo open.lo overload_rep.lo \
 	pcall.lo ref.lo scope.lo stack_content_by_name.lo weak_ref.lo \
 	wrapper_base.lo
@@ -237,6 +237,7 @@ Lua_uint64.cpp \
 ScriptMgr.cpp \
 sc_defines.cpp \
 system.cpp \
+Lua_AI.cpp \
 luabind/class.cpp \
 luabind/class_info.cpp \
 luabind/class_registry.cpp \
@@ -255,7 +256,7 @@ luabind/ref.cpp \
 luabind/scope.cpp \
 luabind/stack_content_by_name.cpp \
 luabind/weak_ref.cpp \
-luabind/wrapper_base.cpp
+luabind/wrapper_base.cpp 
 
 all: all-recursive
 
@@ -328,6 +329,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LUA_Engine.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LUA_Player.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Lua_AI.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Lua_Creature.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Lua_Unit.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Lua_exports.Plo@am__quote@
