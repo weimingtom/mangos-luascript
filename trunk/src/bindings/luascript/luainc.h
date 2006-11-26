@@ -17,4 +17,5 @@ extern "C"
 #include <luabind/function.hpp>
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
+#include <luabind/object.hpp>
 #endif // __LUA_INC_H__

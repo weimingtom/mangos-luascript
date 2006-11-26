@@ -7,6 +7,7 @@
 #include "SpellAuras.h"
 #include "DynamicObject.h"
 #include "Lua_uint64.h"
+#include "lua_AI.h"
 
 
 const char* lb_Creature_GetScriptName(Creature* _Creature)
@@ -19,6 +20,16 @@ uint32 lb_Creature_QUEST_DIALOG_STATUS(Creature* cr,Player *pPlayer, uint32 defs
 return cr->getDialogStatus(pPlayer, defstatus);
 	}
 
+void lb_Creature_MonsterSay(Creature* cr, char const *text, uint32 language, lua_uint64 targetGUID)
+	{
+	cr->MonsterSay(text,language,targetGUID.m_val);
+	}
+
+LuaAI* lb_Creature_GetLuaAI(Creature* cr) 
+	{
+	//this may be very dangerous if used on creature that dont have lua_ai
+	return (LuaAI*)&cr->AI();
+	}
 
 int lb_Export_Creature(lua_State* L)
 	{
@@ -27,6 +38,7 @@ using namespace luabind;
 module(L)
 [
     class_<Creature , Unit >("Creature")
+	.def("GetLuaAI", &lb_Creature_GetLuaAI)
 	.def("GetScriptName"                        ,&lb_Creature_GetScriptName)
 	.def("QUEST_DIALOG_STATUS"  ,&lb_Creature_QUEST_DIALOG_STATUS)
 	/*from Creature.h */
@@ -70,6 +82,7 @@ module(L)
 	.def("setEmoteState",&Creature::setEmoteState)
 	.def("setDeathState",&Creature::setDeathState)
 	.def("Say",&Creature::Say)
+	.def("MonsterSay",&lb_Creature_MonsterSay)
 	.def("getloyalty",&Creature::getloyalty)
 	.def("getUsedTrainPoint",&Creature::getUsedTrainPoint)
 	.def("GivePetLevel",&Creature::GivePetLevel)

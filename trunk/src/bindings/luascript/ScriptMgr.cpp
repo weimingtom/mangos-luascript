@@ -35,6 +35,7 @@
 #include "Lua_uint64.h"
 #include "Lua_Creature.h"
 #include "Lua_exports.h"
+#include "Lua_AI.h"
 
 lua_State *LuaVM = NULL;
 
@@ -79,9 +80,25 @@ int lb_init(lua_State* L)
 	lb_Export_Unit(L);
 	lb_Export_Player(L);
 	lb_Export_Creature(L);
+	lb_Export_AI(L);
 	
     return 0;
 }
+
+int lua_at_panic(lua_State *L)
+	{
+	// Destroy LuaVM
+	if (LuaVM) {
+		//we can not call scripts free function as luaVM is gone :(
+		lua_setgcthreshold(LuaVM, 0);  // Collect Garbage
+		lua_close(LuaVM); // Close it
+		LuaVM = NULL;
+	}
+
+error_log("[LUA] Panic in Lua , please reloadscripts or restart server"); 
+
+throw std::runtime_error("Luabind panic error");
+	}
 
 MANGOS_DLL_EXPORT
 void ScriptsInit()
@@ -96,6 +113,8 @@ void ScriptsInit()
 	luaopen_string(LuaVM);
 	luaopen_math(LuaVM);
 	luaopen_debug(LuaVM);
+
+	lua_atpanic (LuaVM, (lua_CFunction )&lua_at_panic);
 
     lb_init(LuaVM);
     
@@ -506,68 +525,34 @@ CreatureAI* GetAI(Creature *_Creature )
     //Script *tmpscript = GetScriptByName(_Creature->GetCreatureInfo()->ScriptName);
     //if(!tmpscript || !tmpscript->GetAI) return NULL;
     //return tmpscript->GetAI(_Creature);
+
+try {
+
+if(!*_Creature->GetCreatureInfo()->ScriptName) return NULL;
+
+if(!LuaVM) return NULL;
+
+luabind::adl::object start_state = luabind::call_function<luabind::adl::object>(LuaVM, 
+																				                                                               "GetAI" , 
+																																			   boost::ref<Creature>(*_Creature) 
+																																			   );
+if( !IsValidLuaAIState(start_state) ) return NULL;
+
+LuaAI* ai = new LuaAI(_Creature);
+ai->SetCurrentState(start_state);
+
+return (CreatureAI*)ai;
+
+	} catch(luabind::error& e)
+	{
+	error_log("[LUA] error in GetAI : %s ",e.what() );
+	}
+catch(...)
+	{
+	error_log("[LUA] unhandled error in GetAI");
+	}
+
+
 return NULL;
 }
 
-void ScriptedAI::UpdateAI(const uint32)
-{
-    if( m_creature->getVictim() != NULL )
-    {
-        if( needToStop() )
-        {
-            DoStopAttack();
-        }
-        else if( m_creature->IsStopped() )
-        {
-            if( m_creature->isAttackReady() )
-            {
-                if(!m_creature->canReachWithAttack(m_creature->getVictim()))
-                    return;
-                m_creature->AttackerStateUpdate(m_creature->getVictim());
-                m_creature->resetAttackTimer();
-
-                if ( !m_creature->getVictim() )
-                    return;
-
-                if( needToStop() )
-                    DoStopAttack();
-            }
-        }
-    }
-}
-
-void ScriptedAI::AttackStop(Unit *)
-{
-    if( m_creature->isAlive() )
-        DoGoHome();
-}
-
-void ScriptedAI::DoStartAttack(Unit* victim)
-{
-    m_creature->Attack(victim);
-    (*m_creature)->Mutate(new TargetedMovementGenerator(*victim));
-}
-
-void ScriptedAI::DoStopAttack()
-{
-    if( m_creature->getVictim() != NULL )
-    {
-        m_creature->AttackStop();
-    }
-}
-
-void ScriptedAI::DoGoHome()
-{
-    if( !m_creature->getVictim() && m_creature->isAlive() )
-    {
-        if( (*m_creature)->top()->GetMovementGeneratorType() == TARGETED_MOTION_TYPE )
-            (*m_creature)->Mutate(new TargetedMovementGenerator(*m_creature));
-
-//        static_cast<TargetedMovementGenerator *>((*m_creature)->top())->TargetedHome(*m_creature);
-    }
-}
-
-bool ScriptedAI::needToStop() const
-{
-    return ( !m_creature->getVictim()->isTargetableForAttack() || !m_creature->isAlive() );
-}

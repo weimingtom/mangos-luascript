@@ -284,6 +284,14 @@ end
 -- bool AreaTrigger( Player *player, Quest *_Quest, uint32 triggerID )
 function  AreaTrigger( player, _Quest, triggerID )
         printf('AreaTrigger')
+        currient_area_trigger = triggerID
+        currient_at_script = m_arrea_triggers[currient_area_trigger]
+
+        if currient_script ~= nil then
+                         return currient_script( player, _Quest )
+                   else
+                   printf("Arreatrigger : %d %s",currient_area_trigger," is not handled by Lua-Script")
+        end   
         return(-1)
 end
 
