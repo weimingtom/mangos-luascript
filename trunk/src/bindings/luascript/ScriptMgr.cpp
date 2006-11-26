@@ -518,7 +518,6 @@ catch(...)
 return false;
 }
 
- // NOT  IMPLEMENTED
 MANGOS_DLL_EXPORT
 CreatureAI* GetAI(Creature *_Creature )
 {
@@ -532,6 +531,8 @@ if(!*_Creature->GetCreatureInfo()->ScriptName) return NULL;
 
 if(!LuaVM) return NULL;
 
+if( luabind::call_function<int>(LuaVM, "HasAI" , boost::ref<Creature>(*_Creature) ) == 0 ) return NULL;
+
 luabind::adl::object start_state = luabind::call_function<luabind::adl::object>(LuaVM, 
 																				                                                               "GetAI" , 
 																																			   boost::ref<Creature>(*_Creature) 
@@ -540,6 +541,12 @@ if( !IsValidLuaAIState(start_state) ) return NULL;
 
 LuaAI* ai = new LuaAI(_Creature);
 ai->SetCurrentState(start_state);
+
+luabind::adl::object ob = start_state["Init"]; //this is not checked in IsValidLuaAIState
+
+if(!ob.is_valid()) throw std::runtime_error("No Init function found");
+
+luabind::call_function<void>(ob,_Creature);
 
 return (CreatureAI*)ai;
 
@@ -555,4 +562,3 @@ catch(...)
 
 return NULL;
 }
-

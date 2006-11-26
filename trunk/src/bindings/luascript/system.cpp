@@ -18,11 +18,26 @@
 
 #ifdef WIN32
 #include <windows.h>
+#include <eh.h> //exception handling
+
+#ifdef _DEBUG
+#ifdef _MSC_VER
+void straight_to_debugger(unsigned int, _EXCEPTION_POINTERS*)
+{ throw; }
+#endif
+#endif
+
 BOOL APIENTRY DllMain( HANDLE hModule,
 DWORD  ul_reason_for_call,
 LPVOID lpReserved
 )
 {
+//Going to catch structured exceptions 
+#ifdef _DEBUG
+#ifdef _MSC_VER
+   _set_se_translator(&straight_to_debugger);
+#endif
+#endif
     return true;
 }
 #endif
