@@ -19,13 +19,13 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/VERBOSE "
+				AdditionalOptions="/VERBOSE /EHa"
 				Optimization="0"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\..\..\src\shared;..\..\..\src\framework;..\..\..\dep\include;.\;.\lua\include;&quot;\ ..\..\dep\include&quot;;.\lua\src;..\..\..\src\mangosd;..\..\..\src\game"
 				PreprocessorDefinitions="WIN32;_DEBUG;MANGOS_DEBUG;_WINDOWS;_USRDLL;SCRIPT"
 				MinimalRebuild="TRUE"
-				ExceptionHandling="TRUE"
+				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
@@ -413,7 +413,7 @@
 			RelativePath=".\config.h">
 		</File>
 		<File
-			RelativePath=".\lua_AI.cpp">
+			RelativePath=".\Lua_AI.cpp">
 		</File>
 		<File
 			RelativePath=".\Lua_AI.h">
