@@ -20,6 +20,7 @@ Lua_uint64.cpp \
 ScriptMgr.cpp \
 sc_defines.cpp \
 system.cpp \
+Lua_AI.cpp \
 luabind/class.cpp \
 luabind/class_info.cpp \
 luabind/class_registry.cpp \
@@ -38,6 +39,6 @@ luabind/ref.cpp \
 luabind/scope.cpp \
 luabind/stack_content_by_name.cpp \
 luabind/weak_ref.cpp \
-luabind/wrapper_base.cpp
+luabind/wrapper_base.cpp 
 
 

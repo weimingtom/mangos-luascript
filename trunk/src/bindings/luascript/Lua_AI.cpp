@@ -7,9 +7,9 @@ int lb_Export_AI(lua_State* L)
 module(L)
 [
 	class_<LuaAI>("LuaAI")
-	.def("ChangeState", LuaAI::ChangeState)
-	.def("SetCurrentState", LuaAI::SetCurrentState)
-	.def("CurrentState", LuaAI::CurrentState)
+	.def("ChangeState", &LuaAI::ChangeState)
+	.def("SetCurrentState", &LuaAI::SetCurrentState)
+	.def("CurrentState", &LuaAI::CurrentState)
 ];
 
 	return 0;
@@ -94,7 +94,7 @@ bool LuaAI::needToStop() const
     return ( !m_creature->getVictim()->isTargetableForAttack() || !m_creature->isAlive() );
 }
 
-void LuaAI::SetCurrentState(const luabind::object& s)  
+void LuaAI::SetCurrentState(const luabind::object& s)
 {
 		if(!s.is_valid()) PRINT_LUA_OBJECT_ERROR;
 		m_CurrentState = s;

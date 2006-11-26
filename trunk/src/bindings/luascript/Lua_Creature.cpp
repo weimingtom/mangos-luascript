@@ -7,7 +7,7 @@
 #include "SpellAuras.h"
 #include "DynamicObject.h"
 #include "Lua_uint64.h"
-#include "lua_AI.h"
+#include "Lua_AI.h"
 
 
 const char* lb_Creature_GetScriptName(Creature* _Creature)
