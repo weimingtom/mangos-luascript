@@ -413,6 +413,12 @@
 			RelativePath=".\config.h">
 		</File>
 		<File
+			RelativePath=".\lua_AI.cpp">
+		</File>
+		<File
+			RelativePath=".\Lua_AI.h">
+		</File>
+		<File
 			RelativePath=".\Lua_Creature.cpp">
 		</File>
 		<File

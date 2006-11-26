@@ -18,6 +18,8 @@
 #ifndef LUA_PLAYER_H
 #define LUA_PLAYER_H
 
+#include "luainc.h"
+
 int lb_Export_Player(lua_State *L);
 
 #endif //LUA_PLAYER_H

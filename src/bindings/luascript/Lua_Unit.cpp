@@ -112,7 +112,7 @@ lua_unit.def("setAttackTimer", &Unit::setAttackTimer )
 	.def("ProcDamageAndSpell", &Unit::ProcDamageAndSpell )
 	.def("HandleEmoteCommand", &Unit::HandleEmoteCommand )
 	.def("AttackerStateUpdate", &Unit::AttackerStateUpdate )
-	.def("SpellMissChanceCalc", &Unit::SpellMissChanceCalc )
+	/*.def("SpellMissChanceCalc", &Unit::SpellMissChanceCalc )*/
 	.def("MeleeMissChanceCalc", &Unit::MeleeMissChanceCalc )
 	.def("GetUnitDodgeChance", &Unit::GetUnitDodgeChance )
 	.def("GetUnitParryChance", &Unit::GetUnitParryChance )
