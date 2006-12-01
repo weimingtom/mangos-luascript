@@ -28,13 +28,8 @@ test:	all
 strip:
 	$(STRIP) bin/*
 
-# official installation
-install: all strip
-	mkdir -p $(INSTALL_BIN) $(INSTALL_INC) $(INSTALL_LIB) $(INSTALL_MAN)
-	$(INSTALL_EXEC) bin/* $(INSTALL_BIN)
-	$(INSTALL_DATA) include/*.h $(INSTALL_INC)
-	$(INSTALL_DATA) lib/*.a $(INSTALL_LIB)
-	$(INSTALL_DATA) doc/*.1 $(INSTALL_MAN)
+install:
+	mkdir install
 
 # shared libraries (for Linux)
 so:
