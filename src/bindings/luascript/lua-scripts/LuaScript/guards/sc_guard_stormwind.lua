@@ -15,7 +15,7 @@ m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
 
     player:SEND_GOSSIP_MENU(2593,_Creature:GetGUID());
 
-return(0)
+return RETURN_OK
 end
 
 --Some functions
@@ -186,27 +186,27 @@ m_scripts[scriptname]["GossipSelect"] = function(player, _Creature, sender, acti
         
       end
 
-return(0)
+return RETURN_OK
 end
 
 m_scripts[scriptname]["GossipSelectWithCode"] = function(player, _Creature, sender, action, sCode)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["QuestAccept"] = function( player, _Creature, _Quest )
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["QuestSelect"] = function(player,_Creature,_Quest)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["ChooseReward"] = function(player, _Creature, _Quest, opt)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["NPCDialogStatus"] = function(player,_Creature)

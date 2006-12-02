@@ -19,32 +19,32 @@ m_scripts[scriptname] = {}
 
 m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["GossipSelect"] = function(player, _Creature, sender, action)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["GossipSelectWithCode"] = function(player, _Creature, sender, action, sCode)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["QuestAccept"] = function( player, _Creature, _Quest )
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["QuestSelect"] = function(player,_Creature,_Quest)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["ChooseReward"] = function(player, _Creature, _Quest, opt)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["NPCDialogStatus"] = function(player,_Creature)
@@ -54,25 +54,25 @@ end
 
 m_scripts[scriptname]["ItemHello"] = function(player, _Item, _Quest)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["ItemQuestAccept"] = function(player, _Item, _Quest)
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["GOHello"] = function(player,_GO )
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["GOQuestAccept"] = function(player, _GO, _Quest )
 
-return(-1)
+return RETURN_NOK
 end
 
 m_scripts[scriptname]["GOChooseReward"] = function(player, _GO, _Quest, opt)
 
-return(-1)
+return RETURN_NOK
 end
