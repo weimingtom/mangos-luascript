@@ -43,11 +43,11 @@ printf("\n")
 --Here you can include your script files :)  , have a look at sc_default.lua on info how to script
 -- 
 --
-include ('LuaScript: LuaScript/example.lua')
-include ('LuaScript: LuaScript/sc_default.lua')
-include ('LuaScript: LuaScript/guards/sc_guard_stormwind.lua')
-include ('LuaScript: LuaScript/guards/sc_guard_undercity.lua')
-include ('LuaScript: LuaScript/guards/sc_guard_orgrimmar.lua')
+include ('LuaScript/example.lua')
+include ('LuaScript/sc_default.lua')
+include ('LuaScript/guards/sc_guard_stormwind.lua')
+include ('LuaScript/guards/sc_guard_undercity.lua')
+include ('LuaScript/guards/sc_guard_orgrimmar.lua')
 
 
 
