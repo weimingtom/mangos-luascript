@@ -1,4 +1,4 @@
-printf("LuaScript: Loading the Mango library...")
+printf("LuaScript: Loading the Mango library...\n")
 --
 -- Mango, Fruit we all like :)
 --
@@ -11,4 +11,4 @@ Mango = {
 	-- DataStore Libraries
 	DataStore = {};
 };
-printf("LuaScript: Loaded the Mango library!")
+printf("LuaScript: Loaded the Mango library!\n")
