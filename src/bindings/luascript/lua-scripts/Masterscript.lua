@@ -30,8 +30,8 @@ include ('LuaScript/AI.lua')
 include ('LuaScript/CallBacks.lua')
 -- Load the Mango Utility Libraries
 include ('LuaScript/Mango.lua')	-- Mango object
-include ('LuaScript/Mango.IO.lua')	-- Mango IO Library
-include ('LuaScript/Mango.DataStore.lua')	-- Mango IO Library
+include ('LuaScript/Mango/Mango.IO.lua')	-- Mango IO Library
+include ('LuaScript/Mango/Mango.DataStore.lua')	-- Mango IO Library
 
 -- Then load the scripts
 printf("\n")
