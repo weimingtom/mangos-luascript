@@ -27,7 +27,7 @@ printf("\n")
 include ('LuaScript/defines.lua')
 include ('LuaScript/ScriptMgr.lua')
 include ('LuaScript/AI.lua')
-include ('LuaScript/Callbacks.lua')
+include ('LuaScript/CallBacks.lua')
 -- Load the Mango Utility Libraries
 include ('LuaScript/Mango.lua')	-- Mango object
 include ('LuaScript/Mango.IO.lua')	-- Mango IO Library
