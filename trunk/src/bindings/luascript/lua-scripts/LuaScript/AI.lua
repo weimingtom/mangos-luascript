@@ -2,12 +2,11 @@
 
 -- luabind::adl::object GetAI(Creature* creature)
 function GetAI(_Creature)
-printf("GetAI")
-        currient_scriptname = _Creature:GetScriptName()
-        currient_state = m_AI[currient_scriptname]
+        current_scriptname = _Creature:GetScriptName()
+        current_state = m_AI[current_scriptname]
 
-        if currient_state ~= nil then
-                          return currient_state
+        if current_state ~= nil then
+                          return current_state
                    else
                           return m_AI["default_ai"]
         end   
@@ -17,11 +16,10 @@ end
 
 --int HasAI(Creature* creature)
 function HasAI(_Creature)
-printf("HasAI")
-        currient_scriptname = _Creature:GetScriptName()
-        currient_state = m_AI[currient_scriptname]
+        current_scriptname = _Creature:GetScriptName()
+        current_state = m_AI[current_scriptname]
 
-        if currient_state ~= nil then
+        if current_state ~= nil then
                           return 1
                    else
                           return 0
