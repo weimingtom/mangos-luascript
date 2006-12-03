@@ -20,7 +20,6 @@
 #include "ScriptMgr.h"
 #include "TargetedMovementGenerator.h"
 #include "luainc.h"
-// Include from mangos - so we can expose it
 #include "Player.h"
 #include "GameObject.h"
 #include "SharedDefines.h"
@@ -28,7 +27,6 @@
 #include "QuestDef.h"
 #include "WorldSession.h"
 #include "CreatureAI.h"
-// Inlude the LUA class frontends
 #include "LUA_Engine.h"
 #include "LUA_Player.h"
 #include "Lua_Unit.h"
@@ -58,6 +56,7 @@ void ScriptsFree()
 	// Destroy LuaVM
 	if (LuaVM){
 		try {
+		unload_ALLAIs();
         luabind::call_function<void>(LuaVM, "ScriptsFree" ); //Call Scripts free function for probably some dealocation
 			} catch(luabind::error&) { } 
 		lua_setgcthreshold(LuaVM, 0);  // Collect Garbage
@@ -124,13 +123,13 @@ void ScriptsInit()
 		return;
 	}
 
+load_AllAIs();  //going to reload all loaded AI`s if there are any at all
 }
 
 MANGOS_DLL_EXPORT
 bool GossipHello ( Player * player, Creature *_Creature )
 {
-
-try {
+ML_TRY
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
    
    player->PlayerTalkClass->ClearMenus();
@@ -141,14 +140,7 @@ if(LuaVM)
 																		boost::ref<Creature>(*_Creature)
 																		) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in GossipHello : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in GossipHello");
-	}
+ML_CATCH
 
 return false;
 }
@@ -156,8 +148,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool GossipSelect( Player *player, Creature *_Creature,uint32 sender, uint32 action )
 {
-
-try {
+ML_TRY
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -170,14 +161,7 @@ if(LuaVM)
 																		 action 
 																		 )  !=  -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in GossipSelect : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in GossipSelect");
-	}
+ML_CATCH
 
 return false;
 }
@@ -185,8 +169,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool GossipSelectWithCode( Player *player, Creature *_Creature, uint32 sender, uint32 action, char* sCode )
 {
- 
-try {
+ML_TRY
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -200,14 +183,7 @@ if(LuaVM)
 																		  sCode
 																		  ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in GossipSelectWithCode : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in GossipSelectWithCode");
-	}
+ML_CATCH
 
 return false;
 }
@@ -215,8 +191,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool QuestAccept( Player *player, Creature *_Creature, Quest *_Quest )
 {
-
-try {
+ML_TRY
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -228,14 +203,7 @@ return ( luabind::call_function<int>(LuaVM, "QuestAccept",
 						                							  boost::ref<Quest>(*_Quest)  
 											                          ) !=  -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in QuestAccept : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in QuestAccept");
-	}
+ML_CATCH
 
 return false;
 }
@@ -243,8 +211,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool QuestSelect( Player *player, Creature *_Creature, Quest *_Quest )
 {
-
-try {
+ML_TRY
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -256,14 +223,7 @@ if(LuaVM)
 													   boost::ref<Quest>(*_Quest) 
 													   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in QuestSelect : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in QuestSelect");
-	}
+ML_CATCH
 
 return false;
 }
@@ -271,8 +231,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool QuestComplete( Player *player, Creature *_Creature, Quest *_Quest )
 {
-
-try {
+ML_TRY
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -284,14 +243,7 @@ if(LuaVM)
 													   boost::ref<Quest>(*_Quest) 
 													   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in QuestComplete : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in QuestComplete");
-	}
+ML_CATCH
 
 return false;
 }
@@ -299,8 +251,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool ChooseReward( Player *player, Creature *_Creature, Quest *_Quest, uint32 opt )
 {
-
-try {
+ML_TRY
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -313,14 +264,7 @@ if(LuaVM)
 													   opt 
 													   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in ChooseReward : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in ChooseReward");
-	}
+ML_CATCH
 
 return false;
 }
@@ -328,8 +272,7 @@ return false;
 MANGOS_DLL_EXPORT
 uint32 NPCDialogStatus( Player *player, Creature *_Creature )
 {
-
-try {
+ML_TRY
 if(!*_Creature->GetCreatureInfo()->ScriptName) return 100;
 
     player->PlayerTalkClass->ClearMenus();
@@ -339,14 +282,7 @@ if(LuaVM)
                                                                boost::ref<Player>(*player), 
 															   boost::ref<Creature>(*_Creature)) ;
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in NPCDialogStatus : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in NPCDialogStatus");
-	}
+ML_CATCH
 
 return 100;
 }
@@ -354,8 +290,7 @@ return 100;
 MANGOS_DLL_EXPORT
 bool ItemHello( Player *player, Item *_Item, Quest *_Quest )
 {
-
-try {
+ML_TRY
 if(!*_Item->GetProto()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -367,14 +302,7 @@ if(LuaVM)
 															   boost::ref<Quest>(*_Quest)
 															   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in ItemHello : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in ItemHello");
-	}
+ML_CATCH
 
 return false;
 }
@@ -382,8 +310,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool ItemQuestAccept( Player *player, Item *_Item, Quest *_Quest )
 {
-
-try {
+ML_TRY
 if(!*_Item->GetProto()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -395,14 +322,7 @@ if(LuaVM)
 															   boost::ref<Quest>(*_Quest)
 															   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in ItemQuestAccept : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in ItemQuestAccept");
-	}
+ML_CATCH
 
 return false;
 }
@@ -410,8 +330,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool GOHello( Player *player, GameObject *_GO )
 {
-
-try {
+ML_TRY
 if(!*_GO->GetGOInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -422,14 +341,7 @@ if(LuaVM)
 															   boost::ref<GameObject>(*_GO) 
 															   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in GOHello : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in GOHello");
-	}
+ML_CATCH
 
 return false;
 }
@@ -437,8 +349,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool GOQuestAccept( Player *player, GameObject *_GO, Quest *_Quest )
 {
-
-try {
+ML_TRY
 if(!*_GO->GetGOInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -450,14 +361,7 @@ if(LuaVM)
 															   boost::ref<Quest>(*_Quest)
 															   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in GOQuestAccept : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in GOQuestAccept");
-	}
+ML_CATCH
 
 return false;
 }
@@ -465,8 +369,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool GOChooseReward( Player *player, GameObject *_GO, Quest *_Quest, uint32 opt )
 {
-
-try {
+ML_TRY
 if(!*_GO->GetGOInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -479,14 +382,7 @@ if(LuaVM)
 															   opt
 															   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in GOChooseReward : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in GOChooseReward");
-	}
+ML_CATCH
 
 return false;
 }
@@ -494,8 +390,7 @@ return false;
 MANGOS_DLL_EXPORT
 bool AreaTrigger( Player *player, Quest *_Quest, uint32 triggerID )
 {
-
-try {
+ML_TRY
 
     player->PlayerTalkClass->ClearMenus();
 
@@ -506,14 +401,7 @@ if(LuaVM)
 															   triggerID
 															   ) != -1);
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in AreaTrigger : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in AreaTrigger");
-	}
+ML_CATCH
 
 return false;
 }
@@ -521,11 +409,7 @@ return false;
 MANGOS_DLL_EXPORT
 CreatureAI* GetAI(Creature *_Creature )
 {
-    //Script *tmpscript = GetScriptByName(_Creature->GetCreatureInfo()->ScriptName);
-    //if(!tmpscript || !tmpscript->GetAI) return NULL;
-    //return tmpscript->GetAI(_Creature);
-
-try {
+ML_TRY
 
 if(!*_Creature->GetCreatureInfo()->ScriptName) return NULL;
 
@@ -542,23 +426,13 @@ if( !IsValidLuaAIState(start_state) ) return NULL;
 LuaAI* ai = new LuaAI(_Creature);
 ai->SetCurrentState(start_state);
 
-luabind::adl::object ob = start_state["Init"]; //this is not checked in IsValidLuaAIState
+luabind::adl::object ob = start_state["Init"]; 
 
-if(!ob.is_valid()) throw std::runtime_error("No Init function found");
-
-luabind::call_function<void>(ob,_Creature);
+luabind::call_function<void>(ob,boost::ref<LuaAI_Proxy>(*(ai->m_proxy))  );
 
 return (CreatureAI*)ai;
 
-	} catch(luabind::error& e)
-	{
-	error_log("[LUA] error in GetAI : %s ",e.what() );
-	}
-catch(...)
-	{
-	error_log("[LUA] unhandled error in GetAI");
-	}
-
+ML_CATCH
 
 return NULL;
 }

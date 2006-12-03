@@ -38,7 +38,7 @@ using namespace luabind;
 module(L)
 [
     class_<Creature , Unit >("Creature")
-	.def("GetLuaAI", &lb_Creature_GetLuaAI)
+	/*.def("GetLuaAI", &lb_Creature_GetLuaAI) NOT SAFE FOR NOW*/
 	.def("GetScriptName"                        ,&lb_Creature_GetScriptName)
 	.def("QUEST_DIALOG_STATUS"  ,&lb_Creature_QUEST_DIALOG_STATUS)
 	/*from Creature.h */

@@ -10,6 +10,10 @@
 #include "WorldSession.h"
 #include "CreatureAI.h"
 #include "luainc.h"
+#include "Creature.h"
+#include "LuaAI_Proxy.h"
+
+//Here is big mess .... need to fixup the mess a little
 
 //goind to implement FSM , as it is faster and easyer for exporting to scripting.
 
@@ -21,21 +25,27 @@ bool IsValidLuaAIState(const luabind::adl::object& ob);
 
 #define VISIBLE_RANGE (26.46f)
 
+class LuaAI_Proxy;
+
 class MANGOS_DLL_DECL LuaAI : public CreatureAI
   {
   private:
     luabind::object m_CurrentState;
 
-    Creature* m_creature;
-
   public:
-    LuaAI(Creature* creature) : m_creature(creature)
-    {}
-    ~LuaAI()
-    {}
+    Creature* m_creature;
+	LuaAI_Proxy* m_proxy;
+
+    LuaAI(Creature* creature);
+    virtual ~LuaAI();
+     
+    void Reload();
 
     void SetCurrentState(const luabind::object& s);
 
+	void SetInvalid(const luabind::object& s) { m_CurrentState = s; }
+
+	Creature* GetCreature() { return m_creature; }
     //this method makes sure the current state object is valid before calling
     // the Execute function of the Lua table it represents
     void UpdateScriptedStateMachine();
@@ -44,35 +54,30 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
     void ChangeState(const luabind::object& new_state);
 
     //retrieve the current state
-    const luabind::object& CurrentState()const
-      {
-        return m_CurrentState;
-      }
+    const luabind::object& CurrentState()const   { return m_CurrentState; }
 
     // Called if IsVisible(Unit *who) is true at each *who move
-    void MoveInLineOfSight(Unit *)
-    {}
+    void MoveInLineOfSight(Unit * u);
 
     // Called at each attack of m_creature by any victim
-    void AttackStart(Unit *)
-    {}
+    void AttackStart(Unit * u);
 
     // Called at stoping attack by any attacker
-    void AttackStop(Unit *);
+    void AttackStop(Unit * u);
+
+    void AttackStop_default(Unit *);
 
     // Called at any heal cast/item used (call non implemented in mangos)
-    void HealBy(Unit *healer, uint32 amount_healed)
-    {}
+    void HealBy(Unit *healer, uint32 amount_healed);
 
     // Called at any Damage from any attacker
-    void DamageInflict(Unit *healer, uint32 amount_healed)
-    {}
+    void DamageInflict(Unit *done_by, uint32 amount_damage);
 
     // Is unit visibale for MoveInLineOfSight
-    bool IsVisible(Unit *who) const
+	bool IsVisible(Unit *who) const;
+    bool IsVisible_default(Unit *who) const
       {
-        debug_log( "LuaAI::IsVisible not implemented" );
-        return false; /*!who->isStealth() && m_creature->GetDistanceSq(who) <= VISIBLE_RANGE;*/
+       return !who->HasStealthAura() && m_creature->GetDistanceSq(who) <= VISIBLE_RANGE;
       }
 
     // Called at World update tick
@@ -80,7 +85,7 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
 
     // Check condition for attack stop
     virtual bool needToStop() const;
-
+    bool needToStop_default() const;
     //= Some useful helpers =========================
 
     // Start attack of victim and go to him
@@ -106,7 +111,45 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
     }
 
     void DoGoHome();
+
   };
 
+class LuaAI_Proxy
+	{
+	public:
+	LuaAI_Proxy() : m_ai(NULL)  { }
+	LuaAI_Proxy(LuaAI* ai) :m_ai(ai)  { }
+	~LuaAI_Proxy() { }
+
+    inline void SetCurrentState(const luabind::object& s) { m_ai->SetCurrentState(s); }
+
+    inline void ChangeState(const luabind::object& new_state) { m_ai->ChangeState(new_state); }
+
+    inline const luabind::object& CurrentState()const { return m_ai->CurrentState(); }
+ 
+    inline Creature* GetCreature() { return m_ai->m_creature; }
+    
+    inline void DoStartAttack(Unit* victim)  { m_ai->DoStartAttack(victim); }
+ 
+    inline void DoStopAttack() { m_ai->DoStopAttack(); }
+
+    inline void DoCast(Unit* victim, uint32 spelId)
+    {
+	m_ai->m_creature->CastSpell(victim,spelId,true);
+    }
+    
+    inline void DoSay(char const* text, uint32 language)
+    {
+     m_ai->m_creature->MonsterSay(text,language, m_ai->m_creature->GetGUID());
+    }
+
+	private:
+	LuaAI* m_ai;
+	};
+
+void register_LuaAI(LuaAI* ai);
+void unregister_LuaAI(LuaAI* ai);
+void load_AllAIs();
+void unload_ALLAIs();
 
 #endif //LUA_AI_H
