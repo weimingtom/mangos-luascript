@@ -409,6 +409,76 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="lua"
+			Filter="">
+			<File
+				RelativePath=".\lua\src\lapi.h">
+			</File>
+			<File
+				RelativePath=".\lua\include\lauxlib.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lcode.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\ldebug.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\ldo.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lfunc.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lgc.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\llex.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\llimits.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lmem.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lobject.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lopcodes.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lparser.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lstate.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lstring.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\ltable.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\ltm.h">
+			</File>
+			<File
+				RelativePath=".\lua\include\lua.h">
+			</File>
+			<File
+				RelativePath=".\lua\include\lualib.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lundump.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lvm.h">
+			</File>
+			<File
+				RelativePath=".\lua\src\lzio.h">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\config.h">
 		</File>

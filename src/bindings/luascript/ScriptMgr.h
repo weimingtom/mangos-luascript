@@ -29,4 +29,9 @@
 
 #define MAX_SCRIPTS 1000
 
+#define ML_TRY try {
+#define ML_CATCH 	} catch(luabind::error& e)  { error_log("[LUA] error/exception : %s , catched at %s %i",e.what() ,__FILE__ , __LINE__ ); } \
+	                                           catch(std::runtime_error& e) { error_log("[LUA] error/exception : %s , catched at %s %i",e.what()  ,__FILE__ , __LINE__ ); } \
+                                               catch(...) { error_log("[LUA] unhandled error/exception , catched at %s %i ",__FILE__ , __LINE__);}
+
 #endif
