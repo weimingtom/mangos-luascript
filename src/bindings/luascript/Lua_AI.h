@@ -11,7 +11,7 @@
 #include "CreatureAI.h"
 #include "luainc.h"
 #include "Creature.h"
-#include "LuaAI_Proxy.h"
+
 
 //Here is big mess .... need to fixup the mess a little
 
