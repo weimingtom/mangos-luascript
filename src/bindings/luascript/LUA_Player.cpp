@@ -84,10 +84,10 @@ void lb_Player_SEND_TABARDLIST(Player* pl , lua_uint64 guid )
   pl->GetSession()->SendTabardVendorActivate(guid.m_val);
 }
 
-void lb_Player_SEND_AUCTIONLIST(Player* pl , lua_uint64 guid )
-{
-  pl->GetSession()->SendAuctionHello(guid.m_val);
-}
+// void lb_Player_SEND_AUCTIONLIST(Player* pl , lua_uint64 guid )
+// {
+//   pl->GetSession()->SendAuctionHello(guid.m_val);
+// }
 
 void lb_Player_SEND_TAXILIST(Player* pl , lua_uint64 guid )
 {
@@ -163,7 +163,7 @@ int lb_Export_Player(lua_State *L)
           .def("SEND_TRAINERLIST",&lb_Player_SEND_TRAINERLIST )
           .def("SEND_BANKERLIST",&lb_Player_SEND_BANKERLIST )
           .def("SEND_TABARDLIST",&lb_Player_SEND_TABARDLIST )
-          .def("SEND_AUCTIONLIST",&lb_Player_SEND_AUCTIONLIST )
+//           .def("SEND_AUCTIONLIST",&lb_Player_SEND_AUCTIONLIST )
           .def("SEND_TAXILIST",&lb_Player_SEND_TAXILIST )
           .def("SEND_SPRESURRECT",&lb_Player_SEND_SPRESURRECT )
           .def("GET_HONORRANK",&lb_Player_GET_HONORRANK )
@@ -311,7 +311,7 @@ int lb_Export_Player(lua_State *L)
           .def("SetSelection", &lb_Player_SetSelection)
           .def("SetTarget", &lb_Player_SetTarget)
           .def("AddMail", &Player::AddMail)
-          .def("SetMail", &Player::SetMail)
+//           .def("SetMail", &Player::SetMail)
           .def("RemoveMail", &Player::RemoveMail)
           .def("GetMailSize", &Player::GetMailSize)
           .def("GetMail", &Player::GetMail)
@@ -335,8 +335,8 @@ int lb_Export_Player(lua_State *L)
           .def("GetRank", &Player::GetRank)
           .def("CheckDuelDistance", &Player::CheckDuelDistance)
           .def("DuelComplete", &Player::DuelComplete)
-          .def("GetCurrentBuybackSlot", &Player::GetCurrentBuybackSlot)
-          .def("SetCurrentBuybackSlot", &Player::SetCurrentBuybackSlot)
+//           .def("GetCurrentBuybackSlot", &Player::GetCurrentBuybackSlot)
+//           .def("SetCurrentBuybackSlot", &Player::SetCurrentBuybackSlot)
           .def("IsGroupMember", &Player::IsGroupMember)
           .def("UpdateSkill", &Player::UpdateSkill)
           .def("UpdateSkillPro", &Player::UpdateSkillPro)

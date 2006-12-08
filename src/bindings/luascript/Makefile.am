@@ -8,7 +8,7 @@ pkglibdir = $(libdir)
 lib_LTLIBRARIES = libMaNGOSScript.la
 
 libMaNGOSScript_la_LIBADD=./lua/lib/liblua.a ./lua/lib/liblualib.a
-libMaNGOSScript_la_LDFLAGS= -module -export-dynamic
+libMaNGOSScript_la_LDFLAGS=-export-dynamic
 
 libMaNGOSScript_la_SOURCES = \
 LUA_Engine.cpp \
@@ -39,6 +39,6 @@ luabind/ref.cpp \
 luabind/scope.cpp \
 luabind/stack_content_by_name.cpp \
 luabind/weak_ref.cpp \
-luabind/wrapper_base.cpp 
+luabind/wrapper_base.cpp
 
 
