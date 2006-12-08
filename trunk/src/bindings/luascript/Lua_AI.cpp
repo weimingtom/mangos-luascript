@@ -9,8 +9,11 @@
 #include "CreatureAI.h"
 #include "TargetedMovementGenerator.h"
 #include "ScriptMgr.h"
+#include "Common.h"
 
-std::hash_map<uint32,LuaAI*> Lua_Ai_Register;
+typedef std::map<uint32,LuaAI*> Lua_Ai_Register_type;
+Lua_Ai_Register_type Lua_Ai_Register;
+
 extern lua_State *LuaVM;
 
 int lb_Export_AI(lua_State* L)
@@ -50,7 +53,7 @@ bool IsValidLuaAIState(const luabind::adl::object& ob)
 	return true;
 	}
 
-LuaAI::LuaAI(Creature* creature) 
+LuaAI::LuaAI(Creature* creature)
 	: m_creature(creature)
     {
 	m_proxy = new LuaAI_Proxy(this);
@@ -73,7 +76,7 @@ LuaAI::~LuaAI()
 
 void LuaAI::Reload()
 	{
-		//we are going to set currient state to invalid object 
+		//we are going to set currient state to invalid object
 		luabind::object ob;
 		this->m_CurrentState = ob;
 
@@ -83,15 +86,15 @@ void LuaAI::Reload()
 		return;
 		}
 
-    luabind::adl::object start_state = luabind::call_function<luabind::adl::object>(LuaVM, 
-																				                                                                   "GetAI" , 
+    luabind::adl::object start_state = luabind::call_function<luabind::adl::object>(LuaVM,
+																				                                                                   "GetAI" ,
 																																			        boost::ref<Creature>(*(this->m_creature))
 																																			       );
 
 	if( !IsValidLuaAIState(start_state) ) error_log("[LUA] script is not valid , however will be loaded : %s",m_creature->GetCreatureInfo()->ScriptName);
     this->SetCurrentState(start_state);
 
-	ob = start_state["Init"]; 
+	ob = start_state["Init"];
 
     luabind::call_function<void>(ob,boost::ref<LuaAI_Proxy>(*(this->m_proxy)) );
 	}
@@ -153,7 +156,7 @@ void LuaAI::DoGoHome()
 
 void LuaAI::SetCurrentState(const luabind::object& s)
 {
-		if( ( !s.is_valid() ) || !(luabind::type(s) == LUA_TTABLE ) )  
+		if( ( !s.is_valid() ) || !(luabind::type(s) == LUA_TTABLE ) )
 			{
 			PRINT_LUA_OBJECT_ERROR;
 			return;
@@ -296,7 +299,7 @@ void load_AllAIs()
 	{
 	if(Lua_Ai_Register.empty() ) return;
 
-	std::hash_map<uint32,LuaAI*>::iterator iter;
+    Lua_Ai_Register_type::iterator iter;
 	for( iter = Lua_Ai_Register.begin() ; iter != Lua_Ai_Register.end() ; iter++ )
 		{
 		iter->second->Reload();
@@ -309,7 +312,7 @@ void unload_ALLAIs()
 
 	if(Lua_Ai_Register.empty() ) return;
 
-	std::hash_map<uint32,LuaAI*>::iterator iter;
+    Lua_Ai_Register_type::iterator iter;
 	for( iter = Lua_Ai_Register.begin() ; iter != Lua_Ai_Register.end() ; iter++ )
 		{
 		iter->second->SetInvalid(ob);
@@ -318,6 +321,6 @@ void unload_ALLAIs()
 
 void unregister_LuaAI(LuaAI* ai)
 	{
-    std::hash_map<uint32,LuaAI*>::iterator iter = Lua_Ai_Register.find(ai->m_creature->GetGUIDLow());
+    Lua_Ai_Register_type::iterator iter = Lua_Ai_Register.find(ai->m_creature->GetGUIDLow());
 	if( iter != Lua_Ai_Register.end() ) Lua_Ai_Register.erase(iter);
 	}
