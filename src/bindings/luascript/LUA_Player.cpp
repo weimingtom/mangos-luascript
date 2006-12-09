@@ -324,7 +324,7 @@ int lb_Export_Player(lua_State *L)
           .def("resetTalents", &Player::resetTalents)
           .def("resetTalentsCost", &Player::resetTalentsCost)
           /*.def("setResurrect", &Player::setResurrect)/*64*/
-          .def("SetPVPCount", &Player::SetPVPCount)
+          /*.def("SetPVPCount", &Player::SetPVPCount)*/
           .def("addAction", &Player::addAction)
           .def("removeAction", &Player::removeAction)
           .def("GetGroupLeader", &Player::GetGroupLeader)
