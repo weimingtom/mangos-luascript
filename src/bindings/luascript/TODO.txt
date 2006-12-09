@@ -1,10 +1,8 @@
 TODO list by Derex
 --------------------------------------------------------
+*MaNGOS need fixing singletons and all dll api
 *need to export many other functions , and things to lua
 *need to rearange code ... it is absolutelly messed
-*need to optimize ,we dont want empty lua calls ( thus when creature->scriptname is NULL ) , this check can be done in C++
 *documentation!!!
-*need to port to linux
-*check windows priject.file and make sure it runs OK on different machines
 *find something else to do
 

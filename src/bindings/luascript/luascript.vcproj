@@ -22,7 +22,7 @@
 				AdditionalOptions="/VERBOSE /EHa"
 				Optimization="0"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\..\src\shared;..\..\..\src\framework;..\..\..\dep\include;.\;.\lua\include;&quot;\ ..\..\dep\include&quot;;.\lua\src;..\..\..\src\mangosd;..\..\..\src\game"
+				AdditionalIncludeDirectories="..\..\..\src\shared;..\..\..\src\framework;..\..\..\dep\include;.\;.\lua\include;&quot;\ ..\..\dep\include&quot;;.\lua\src;..\..\..\src\mangosd;..\..\..\src\game;&quot;.\cpp-scripts&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;MANGOS_DEBUG;_WINDOWS;_USRDLL;SCRIPT"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
@@ -78,7 +78,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\src\shared;..\..\..\src\framework;..\..\..\dep\include;.\;.\lua\include;.\lua\src\"
+				AdditionalIncludeDirectories="..\..\..\src\shared;..\..\..\src\framework;..\..\..\dep\include;.\;.\lua\include;.\lua\src\;&quot;.\cpp-scripts&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SCRIPT"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -479,8 +479,175 @@
 				RelativePath=".\lua\src\lzio.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="cppScripts"
+			Filter="">
+			<Filter
+				Name="custom"
+				Filter="">
+				<File
+					RelativePath=".\cpp-scripts\custom\sc_marshal_mcbride.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\custom\sc_silas_darkmoon.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\custom\sc_skorn_whitecloud.cpp">
+				</File>
+			</Filter>
+			<Filter
+				Name="guards"
+				Filter="">
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_bluffwatcher.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_darnassus.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_dunmorogh.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_durotar.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_elwynnforest.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_ironforge.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_mulgore.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_orgrimmar.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_stormwind.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_teldrassil.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_tirisfal.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\guards\sc_guard_undercity.cpp">
+				</File>
+			</Filter>
+			<Filter
+				Name="honor"
+				Filter="">
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_commander.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_corporal.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_field_marshal.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_grand_marshal.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_knight-captain.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_knight-lieutenant.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_knight.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_knight_champion.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_lieutenant_commander.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_marshal.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_master_sergeant.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_private.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_sergeant.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\alliance\sc_alliance_sergeant_major.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_blood_guard.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_centurion.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_champion.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_first_sergeant.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_general.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_grunt.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_high_warlord.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_legionaire.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_lieutenant_general.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_scout.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_senior_sergeant.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_sergeant.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_stone_guard.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\honor\horde\sc_horde_warlord.cpp">
+				</File>
+			</Filter>
+			<Filter
+				Name="serveus"
+				Filter="">
+				<File
+					RelativePath=".\cpp-scripts\serveus\sc_battlemaster.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\serveus\sc_guildmaster.cpp">
+				</File>
+				<File
+					RelativePath=".\cpp-scripts\serveus\sc_travelmaster.cpp">
+				</File>
+			</Filter>
+		</Filter>
 		<File
 			RelativePath=".\config.h">
+		</File>
+		<File
+			RelativePath=".\CppScriptMgr.cpp">
+		</File>
+		<File
+			RelativePath=".\CppScriptMgr.h">
+		</File>
+		<File
+			RelativePath=".\cpp-scripts\CppScripts.cpp">
 		</File>
 		<File
 			RelativePath=".\Lua_AI.cpp">
@@ -532,6 +699,9 @@
 		</File>
 		<File
 			RelativePath=".\sc_defines.cpp">
+		</File>
+		<File
+			RelativePath=".\sc_defines.h">
 		</File>
 		<File
 			RelativePath=".\ScriptMgr.cpp">
