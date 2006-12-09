@@ -28,16 +28,16 @@ include ('LuaScript/defines.lua')
 include ('LuaScript/ScriptMgr.lua')
 include ('LuaScript/AI.lua')
 include ('LuaScript/CallBacks.lua')
+
 -- Load the Mango Utility Libraries
 include ('LuaScript/Mango.lua')	-- Mango object
 include ('LuaScript/Mango/Mango.IO.lua')	-- Mango IO Library
-include ('LuaScript/Mango/Mango.DataStore.lua')	-- Mango IO Library
+include ('LuaScript/Mango/Mango.DataStore.lua')	-- Mango DataStore Library
 
 -- Then load the scripts
 printf("\n")
 printf("LuaScript: Loading scripts...\n")
 printf("\n")
-
 --
 --
 --Here you can include your script files :)  , have a look at sc_default.lua on info how to script
@@ -45,9 +45,15 @@ printf("\n")
 --
 include ('LuaScript/example.lua')
 include ('LuaScript/sc_default.lua')
-include ('LuaScript/guards/sc_guard_stormwind.lua')
-include ('LuaScript/guards/sc_guard_undercity.lua')
+include ('LuaScript/guards/sc_guard_bluffwatcher.lua')
+include ('LuaScript/guards/sc_guard_darnassus.lua')
+include ('LuaScript/guards/sc_guard_dunmorogh.lua')
+include ('LuaScript/guards/sc_guard_durotar.lua')
+include ('LuaScript/guards/sc_guard_elwynnforest.lua')
+include ('LuaScript/guards/sc_guard_ironforge.lua')
+include ('LuaScript/guards/sc_guard_mulgore.lua')
 include ('LuaScript/guards/sc_guard_orgrimmar.lua')
-
-
-
+include ('LuaScript/guards/sc_guard_stormwind.lua')
+include ('LuaScript/guards/sc_guard_teldrassil.lua')
+include ('LuaScript/guards/sc_guard_tirisfal.lua')
+include ('LuaScript/guards/sc_guard_undercity.lua')
