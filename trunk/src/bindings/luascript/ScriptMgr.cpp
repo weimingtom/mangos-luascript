@@ -35,6 +35,8 @@
 #include "Lua_exports.h"
 #include "Lua_AI.h"
 
+#include "CppScriptMgr.h"
+
 lua_State *LuaVM = NULL;
 
 int LUA_CheckStatus (int status)
@@ -63,6 +65,8 @@ void ScriptsFree()
 		lua_close(LuaVM); // Close it
 		LuaVM = NULL;
 	}
+
+cppScriptsFree();
 }
 
 
@@ -124,12 +128,16 @@ void ScriptsInit()
 	}
 
 load_AllAIs();  //going to reload all loaded AI`s if there are any at all
+cppScriptsInit();
 }
 
 MANGOS_DLL_EXPORT
 bool GossipHello ( Player * player, Creature *_Creature )
 {
 ML_TRY
+bool retval = false;
+if( cppGossipHello ( retval, player, _Creature ) )  return retval;
+
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
    
    player->PlayerTalkClass->ClearMenus();
@@ -149,6 +157,9 @@ MANGOS_DLL_EXPORT
 bool GossipSelect( Player *player, Creature *_Creature,uint32 sender, uint32 action )
 {
 ML_TRY
+bool retval = false;
+if( cppGossipSelect( retval, player, _Creature, sender,action ) )  return retval;
+
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -170,6 +181,9 @@ MANGOS_DLL_EXPORT
 bool GossipSelectWithCode( Player *player, Creature *_Creature, uint32 sender, uint32 action, char* sCode )
 {
 ML_TRY
+bool retval = false;
+if( cppGossipSelectWithCode( retval, player, _Creature, sender, action, sCode ) )  return retval;
+
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -192,6 +206,9 @@ MANGOS_DLL_EXPORT
 bool QuestAccept( Player *player, Creature *_Creature, Quest *_Quest )
 {
 ML_TRY
+bool retval = false;
+if( cppQuestAccept( retval, player, _Creature, _Quest ) )  return retval;
+
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -212,6 +229,9 @@ MANGOS_DLL_EXPORT
 bool QuestSelect( Player *player, Creature *_Creature, Quest *_Quest )
 {
 ML_TRY
+bool retval = false;
+if( cppQuestSelect( retval, player, _Creature, _Quest ) )  return retval;
+
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -232,6 +252,9 @@ MANGOS_DLL_EXPORT
 bool QuestComplete( Player *player, Creature *_Creature, Quest *_Quest )
 {
 ML_TRY
+bool retval = false;
+if( cppQuestComplete( retval, player, _Creature, _Quest ) )  return retval;
+
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -252,6 +275,9 @@ MANGOS_DLL_EXPORT
 bool ChooseReward( Player *player, Creature *_Creature, Quest *_Quest, uint32 opt )
 {
 ML_TRY
+bool retval = false;
+if( cppChooseReward( retval, player, _Creature,_Quest, opt ) )  return retval;
+
 if(!*_Creature->GetCreatureInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -273,6 +299,9 @@ MANGOS_DLL_EXPORT
 uint32 NPCDialogStatus( Player *player, Creature *_Creature )
 {
 ML_TRY
+uint32 retval = 100;
+if( cppNPCDialogStatus( retval, player, _Creature ) )  return retval;
+
 if(!*_Creature->GetCreatureInfo()->ScriptName) return 100;
 
     player->PlayerTalkClass->ClearMenus();
@@ -291,6 +320,9 @@ MANGOS_DLL_EXPORT
 bool ItemHello( Player *player, Item *_Item, Quest *_Quest )
 {
 ML_TRY
+bool retval = false;
+if( cppItemHello( retval, player,_Item, _Quest ) )  return retval;
+
 if(!*_Item->GetProto()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -311,6 +343,9 @@ MANGOS_DLL_EXPORT
 bool ItemQuestAccept( Player *player, Item *_Item, Quest *_Quest )
 {
 ML_TRY
+bool retval = false;
+if( cppItemQuestAccept( retval, player, _Item, _Quest ) )  return retval;
+
 if(!*_Item->GetProto()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -331,6 +366,9 @@ MANGOS_DLL_EXPORT
 bool GOHello( Player *player, GameObject *_GO )
 {
 ML_TRY
+bool retval = false;
+if( cppGOHello( retval, player, _GO ) )  return retval;
+
 if(!*_GO->GetGOInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -350,6 +388,9 @@ MANGOS_DLL_EXPORT
 bool GOQuestAccept( Player *player, GameObject *_GO, Quest *_Quest )
 {
 ML_TRY
+bool retval = false;
+if( cppGOQuestAccept( retval,  player, _GO, _Quest ) )  return retval;
+
 if(!*_GO->GetGOInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();
@@ -370,6 +411,9 @@ MANGOS_DLL_EXPORT
 bool GOChooseReward( Player *player, GameObject *_GO, Quest *_Quest, uint32 opt )
 {
 ML_TRY
+bool retval = false;
+if( cppGOChooseReward( retval, player, _GO, _Quest, opt ) )  return retval;
+
 if(!*_GO->GetGOInfo()->ScriptName) return false;
 
     player->PlayerTalkClass->ClearMenus();

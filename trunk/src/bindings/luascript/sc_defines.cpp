@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2005,2006 MaNGOS <http://www.mangosproject.org/>
+/*
+ * Copyright (C) 2005,2006 ScriptDev <https://opensvn.csie.org/ScriptDev/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,14 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#include "lua_defines.h"
-#include "Player.h"
-#include "Common.h"
-#include "GameObject.h"
-#include "SharedDefines.h"
-#include "GossipDef.h"
-#include "QuestDef.h"
-#include "WorldSession.h"
+
+#include "sc_defines.h"
 
 uint32 GetSkillLevel(Player *player,uint32 trskill)
 {
