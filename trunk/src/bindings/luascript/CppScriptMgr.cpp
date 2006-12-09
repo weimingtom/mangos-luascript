@@ -1,12 +1,12 @@
 #include "config.h"
-#include "cppScriptMgr.h"
+#include "CppScriptMgr.h"
 
 uint8 loglevel = 0;
 int nrscripts;
 Script *m_scripts[MAX_SCRIPTS];
 
 void cppScriptsFree()
-{                                                          
+{
     for(int i=0;i<nrscripts;i++)
         delete m_scripts[i];
 }

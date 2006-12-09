@@ -55,14 +55,37 @@ libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libMaNGOSScript_la_DEPENDENCIES = ./lua/lib/liblua.a \
 	./lua/lib/liblualib.a
-am_libMaNGOSScript_la_OBJECTS = LUA_Engine.lo LUA_Player.lo \
-	Lua_Creature.lo Lua_Unit.lo Lua_exports.lo Lua_uint64.lo \
-	ScriptMgr.lo sc_defines.lo system.lo Lua_AI.lo class.lo \
-	class_info.lo class_registry.lo class_rep.lo create_class.lo \
-	error.lo find_best_match.lo function.lo implicit_cast.lo \
-	link_compatibility.lo object_rep.lo open.lo overload_rep.lo \
-	pcall.lo ref.lo scope.lo stack_content_by_name.lo weak_ref.lo \
-	wrapper_base.lo
+am_libMaNGOSScript_la_OBJECTS = CppScripts.lo CppScriptMgr.lo \
+	LUA_Engine.lo LUA_Player.lo Lua_Creature.lo Lua_Unit.lo \
+	Lua_exports.lo Lua_uint64.lo ScriptMgr.lo sc_defines.lo \
+	system.lo Lua_AI.lo class.lo class_info.lo class_registry.lo \
+	class_rep.lo create_class.lo error.lo find_best_match.lo \
+	function.lo implicit_cast.lo link_compatibility.lo \
+	object_rep.lo open.lo overload_rep.lo pcall.lo ref.lo scope.lo \
+	stack_content_by_name.lo weak_ref.lo wrapper_base.lo \
+	sc_marshal_mcbride.lo sc_silas_darkmoon.lo \
+	sc_skorn_whitecloud.lo sc_guard_bluffwatcher.lo \
+	sc_guard_darnassus.lo sc_guard_dunmorogh.lo \
+	sc_guard_durotar.lo sc_guard_elwynnforest.lo \
+	sc_guard_ironforge.lo sc_guard_mulgore.lo \
+	sc_guard_orgrimmar.lo sc_guard_stormwind.lo \
+	sc_guard_teldrassil.lo sc_guard_tirisfal.lo \
+	sc_guard_undercity.lo sc_alliance_commander.lo \
+	sc_alliance_corporal.lo sc_alliance_field_marshal.lo \
+	sc_alliance_grand_marshal.lo sc_alliance_knight-captain.lo \
+	sc_alliance_knight-lieutenant.lo sc_alliance_knight.lo \
+	sc_alliance_knight_champion.lo \
+	sc_alliance_lieutenant_commander.lo sc_alliance_marshal.lo \
+	sc_alliance_master_sergeant.lo sc_alliance_private.lo \
+	sc_alliance_sergeant.lo sc_alliance_sergeant_major.lo \
+	sc_horde_blood_guard.lo sc_horde_centurion.lo \
+	sc_horde_champion.lo sc_horde_first_sergeant.lo \
+	sc_horde_general.lo sc_horde_grunt.lo sc_horde_high_warlord.lo \
+	sc_horde_legionaire.lo sc_horde_lieutenant_general.lo \
+	sc_horde_scout.lo sc_horde_senior_sergeant.lo \
+	sc_horde_sergeant.lo sc_horde_stone_guard.lo \
+	sc_horde_warlord.lo sc_battlemaster.lo sc_guildmaster.lo \
+	sc_travelmaster.lo
 libMaNGOSScript_la_OBJECTS = $(am_libMaNGOSScript_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -75,6 +98,14 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libMaNGOSScript_la_SOURCES)
 DIST_SOURCES = $(libMaNGOSScript_la_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -124,7 +155,7 @@ FFLAGS = @FFLAGS@
 INCLUDES = @INCLUDES@ -I./../../../src/shared \
 	-I./../../../src/framework -I./../../../dep/include -I./ \
 	-I./lua/include -I./../../dep/include -I./lua/src \
-	-I./../../../src/mangosd -I./../../../src/game
+	-I./cpp-scripts -I./../../../src/mangosd -I./../../../src/game
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -228,6 +259,21 @@ lib_LTLIBRARIES = libMaNGOSScript.la
 libMaNGOSScript_la_LIBADD = ./lua/lib/liblua.a ./lua/lib/liblualib.a
 libMaNGOSScript_la_LDFLAGS = -export-dynamic
 libMaNGOSScript_la_SOURCES = \
+CppScriptMgr.h \
+LUA_Engine.h \
+LUA_Player.h \
+Lua_AI.h \
+Lua_Creature.h \
+Lua_Unit.h \
+Lua_exports.h \
+Lua_uint64.h \
+ScriptMgr.h \
+config.h \
+lua_defines.h \
+luainc.h \
+sc_defines.h \
+cpp-scripts/CppScripts.cpp \
+CppScriptMgr.cpp \
 LUA_Engine.cpp \
 LUA_Player.cpp \
 Lua_Creature.cpp \
@@ -256,7 +302,53 @@ luabind/ref.cpp \
 luabind/scope.cpp \
 luabind/stack_content_by_name.cpp \
 luabind/weak_ref.cpp \
-luabind/wrapper_base.cpp
+luabind/wrapper_base.cpp \
+cpp-scripts/custom/sc_marshal_mcbride.cpp \
+cpp-scripts/custom/sc_silas_darkmoon.cpp \
+cpp-scripts/custom/sc_skorn_whitecloud.cpp \
+cpp-scripts/guards/sc_guard_bluffwatcher.cpp \
+cpp-scripts/guards/sc_guard_darnassus.cpp \
+cpp-scripts/guards/sc_guard_dunmorogh.cpp \
+cpp-scripts/guards/sc_guard_durotar.cpp \
+cpp-scripts/guards/sc_guard_elwynnforest.cpp \
+cpp-scripts/guards/sc_guard_ironforge.cpp \
+cpp-scripts/guards/sc_guard_mulgore.cpp \
+cpp-scripts/guards/sc_guard_orgrimmar.cpp \
+cpp-scripts/guards/sc_guard_stormwind.cpp \
+cpp-scripts/guards/sc_guard_teldrassil.cpp \
+cpp-scripts/guards/sc_guard_tirisfal.cpp \
+cpp-scripts/guards/sc_guard_undercity.cpp \
+cpp-scripts/honor/alliance/sc_alliance_commander.cpp \
+cpp-scripts/honor/alliance/sc_alliance_corporal.cpp \
+cpp-scripts/honor/alliance/sc_alliance_field_marshal.cpp \
+cpp-scripts/honor/alliance/sc_alliance_grand_marshal.cpp \
+cpp-scripts/honor/alliance/sc_alliance_knight-captain.cpp \
+cpp-scripts/honor/alliance/sc_alliance_knight-lieutenant.cpp \
+cpp-scripts/honor/alliance/sc_alliance_knight.cpp \
+cpp-scripts/honor/alliance/sc_alliance_knight_champion.cpp \
+cpp-scripts/honor/alliance/sc_alliance_lieutenant_commander.cpp \
+cpp-scripts/honor/alliance/sc_alliance_marshal.cpp \
+cpp-scripts/honor/alliance/sc_alliance_master_sergeant.cpp \
+cpp-scripts/honor/alliance/sc_alliance_private.cpp \
+cpp-scripts/honor/alliance/sc_alliance_sergeant.cpp \
+cpp-scripts/honor/alliance/sc_alliance_sergeant_major.cpp \
+cpp-scripts/honor/horde/sc_horde_blood_guard.cpp \
+cpp-scripts/honor/horde/sc_horde_centurion.cpp \
+cpp-scripts/honor/horde/sc_horde_champion.cpp \
+cpp-scripts/honor/horde/sc_horde_first_sergeant.cpp \
+cpp-scripts/honor/horde/sc_horde_general.cpp \
+cpp-scripts/honor/horde/sc_horde_grunt.cpp \
+cpp-scripts/honor/horde/sc_horde_high_warlord.cpp \
+cpp-scripts/honor/horde/sc_horde_legionaire.cpp \
+cpp-scripts/honor/horde/sc_horde_lieutenant_general.cpp \
+cpp-scripts/honor/horde/sc_horde_scout.cpp \
+cpp-scripts/honor/horde/sc_horde_senior_sergeant.cpp \
+cpp-scripts/honor/horde/sc_horde_sergeant.cpp \
+cpp-scripts/honor/horde/sc_horde_stone_guard.cpp \
+cpp-scripts/honor/horde/sc_horde_warlord.cpp \
+cpp-scripts/serveus/sc_battlemaster.cpp \
+cpp-scripts/serveus/sc_guildmaster.cpp \
+cpp-scripts/serveus/sc_travelmaster.cpp 
 
 all: all-recursive
 
@@ -327,6 +419,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CppScriptMgr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CppScripts.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LUA_Engine.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LUA_Player.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Lua_AI.Plo@am__quote@
@@ -350,7 +444,53 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/overload_rep.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pcall.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ref.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_commander.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_corporal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_field_marshal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_grand_marshal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_knight-captain.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_knight-lieutenant.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_knight.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_knight_champion.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_lieutenant_commander.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_marshal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_master_sergeant.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_private.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_sergeant.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_alliance_sergeant_major.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_battlemaster.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_defines.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_bluffwatcher.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_darnassus.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_dunmorogh.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_durotar.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_elwynnforest.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_ironforge.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_mulgore.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_orgrimmar.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_stormwind.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_teldrassil.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_tirisfal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guard_undercity.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_guildmaster.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_blood_guard.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_centurion.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_champion.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_first_sergeant.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_general.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_grunt.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_high_warlord.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_legionaire.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_lieutenant_general.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_scout.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_senior_sergeant.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_sergeant.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_stone_guard.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_horde_warlord.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_marshal_mcbride.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_silas_darkmoon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_skorn_whitecloud.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sc_travelmaster.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/scope.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stack_content_by_name.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/system.Plo@am__quote@
@@ -377,6 +517,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+
+CppScripts.lo: cpp-scripts/CppScripts.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CppScripts.lo -MD -MP -MF "$(DEPDIR)/CppScripts.Tpo" -c -o CppScripts.lo `test -f 'cpp-scripts/CppScripts.cpp' || echo '$(srcdir)/'`cpp-scripts/CppScripts.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/CppScripts.Tpo" "$(DEPDIR)/CppScripts.Plo"; else rm -f "$(DEPDIR)/CppScripts.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/CppScripts.cpp' object='CppScripts.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o CppScripts.lo `test -f 'cpp-scripts/CppScripts.cpp' || echo '$(srcdir)/'`cpp-scripts/CppScripts.cpp
 
 class.lo: luabind/class.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT class.lo -MD -MP -MF "$(DEPDIR)/class.Tpo" -c -o class.lo `test -f 'luabind/class.cpp' || echo '$(srcdir)/'`luabind/class.cpp; \
@@ -510,6 +657,328 @@ wrapper_base.lo: luabind/wrapper_base.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='luabind/wrapper_base.cpp' object='wrapper_base.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o wrapper_base.lo `test -f 'luabind/wrapper_base.cpp' || echo '$(srcdir)/'`luabind/wrapper_base.cpp
+
+sc_marshal_mcbride.lo: cpp-scripts/custom/sc_marshal_mcbride.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_marshal_mcbride.lo -MD -MP -MF "$(DEPDIR)/sc_marshal_mcbride.Tpo" -c -o sc_marshal_mcbride.lo `test -f 'cpp-scripts/custom/sc_marshal_mcbride.cpp' || echo '$(srcdir)/'`cpp-scripts/custom/sc_marshal_mcbride.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_marshal_mcbride.Tpo" "$(DEPDIR)/sc_marshal_mcbride.Plo"; else rm -f "$(DEPDIR)/sc_marshal_mcbride.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/custom/sc_marshal_mcbride.cpp' object='sc_marshal_mcbride.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_marshal_mcbride.lo `test -f 'cpp-scripts/custom/sc_marshal_mcbride.cpp' || echo '$(srcdir)/'`cpp-scripts/custom/sc_marshal_mcbride.cpp
+
+sc_silas_darkmoon.lo: cpp-scripts/custom/sc_silas_darkmoon.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_silas_darkmoon.lo -MD -MP -MF "$(DEPDIR)/sc_silas_darkmoon.Tpo" -c -o sc_silas_darkmoon.lo `test -f 'cpp-scripts/custom/sc_silas_darkmoon.cpp' || echo '$(srcdir)/'`cpp-scripts/custom/sc_silas_darkmoon.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_silas_darkmoon.Tpo" "$(DEPDIR)/sc_silas_darkmoon.Plo"; else rm -f "$(DEPDIR)/sc_silas_darkmoon.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/custom/sc_silas_darkmoon.cpp' object='sc_silas_darkmoon.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_silas_darkmoon.lo `test -f 'cpp-scripts/custom/sc_silas_darkmoon.cpp' || echo '$(srcdir)/'`cpp-scripts/custom/sc_silas_darkmoon.cpp
+
+sc_skorn_whitecloud.lo: cpp-scripts/custom/sc_skorn_whitecloud.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_skorn_whitecloud.lo -MD -MP -MF "$(DEPDIR)/sc_skorn_whitecloud.Tpo" -c -o sc_skorn_whitecloud.lo `test -f 'cpp-scripts/custom/sc_skorn_whitecloud.cpp' || echo '$(srcdir)/'`cpp-scripts/custom/sc_skorn_whitecloud.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_skorn_whitecloud.Tpo" "$(DEPDIR)/sc_skorn_whitecloud.Plo"; else rm -f "$(DEPDIR)/sc_skorn_whitecloud.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/custom/sc_skorn_whitecloud.cpp' object='sc_skorn_whitecloud.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_skorn_whitecloud.lo `test -f 'cpp-scripts/custom/sc_skorn_whitecloud.cpp' || echo '$(srcdir)/'`cpp-scripts/custom/sc_skorn_whitecloud.cpp
+
+sc_guard_bluffwatcher.lo: cpp-scripts/guards/sc_guard_bluffwatcher.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_bluffwatcher.lo -MD -MP -MF "$(DEPDIR)/sc_guard_bluffwatcher.Tpo" -c -o sc_guard_bluffwatcher.lo `test -f 'cpp-scripts/guards/sc_guard_bluffwatcher.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_bluffwatcher.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_bluffwatcher.Tpo" "$(DEPDIR)/sc_guard_bluffwatcher.Plo"; else rm -f "$(DEPDIR)/sc_guard_bluffwatcher.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_bluffwatcher.cpp' object='sc_guard_bluffwatcher.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_bluffwatcher.lo `test -f 'cpp-scripts/guards/sc_guard_bluffwatcher.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_bluffwatcher.cpp
+
+sc_guard_darnassus.lo: cpp-scripts/guards/sc_guard_darnassus.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_darnassus.lo -MD -MP -MF "$(DEPDIR)/sc_guard_darnassus.Tpo" -c -o sc_guard_darnassus.lo `test -f 'cpp-scripts/guards/sc_guard_darnassus.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_darnassus.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_darnassus.Tpo" "$(DEPDIR)/sc_guard_darnassus.Plo"; else rm -f "$(DEPDIR)/sc_guard_darnassus.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_darnassus.cpp' object='sc_guard_darnassus.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_darnassus.lo `test -f 'cpp-scripts/guards/sc_guard_darnassus.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_darnassus.cpp
+
+sc_guard_dunmorogh.lo: cpp-scripts/guards/sc_guard_dunmorogh.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_dunmorogh.lo -MD -MP -MF "$(DEPDIR)/sc_guard_dunmorogh.Tpo" -c -o sc_guard_dunmorogh.lo `test -f 'cpp-scripts/guards/sc_guard_dunmorogh.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_dunmorogh.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_dunmorogh.Tpo" "$(DEPDIR)/sc_guard_dunmorogh.Plo"; else rm -f "$(DEPDIR)/sc_guard_dunmorogh.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_dunmorogh.cpp' object='sc_guard_dunmorogh.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_dunmorogh.lo `test -f 'cpp-scripts/guards/sc_guard_dunmorogh.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_dunmorogh.cpp
+
+sc_guard_durotar.lo: cpp-scripts/guards/sc_guard_durotar.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_durotar.lo -MD -MP -MF "$(DEPDIR)/sc_guard_durotar.Tpo" -c -o sc_guard_durotar.lo `test -f 'cpp-scripts/guards/sc_guard_durotar.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_durotar.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_durotar.Tpo" "$(DEPDIR)/sc_guard_durotar.Plo"; else rm -f "$(DEPDIR)/sc_guard_durotar.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_durotar.cpp' object='sc_guard_durotar.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_durotar.lo `test -f 'cpp-scripts/guards/sc_guard_durotar.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_durotar.cpp
+
+sc_guard_elwynnforest.lo: cpp-scripts/guards/sc_guard_elwynnforest.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_elwynnforest.lo -MD -MP -MF "$(DEPDIR)/sc_guard_elwynnforest.Tpo" -c -o sc_guard_elwynnforest.lo `test -f 'cpp-scripts/guards/sc_guard_elwynnforest.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_elwynnforest.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_elwynnforest.Tpo" "$(DEPDIR)/sc_guard_elwynnforest.Plo"; else rm -f "$(DEPDIR)/sc_guard_elwynnforest.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_elwynnforest.cpp' object='sc_guard_elwynnforest.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_elwynnforest.lo `test -f 'cpp-scripts/guards/sc_guard_elwynnforest.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_elwynnforest.cpp
+
+sc_guard_ironforge.lo: cpp-scripts/guards/sc_guard_ironforge.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_ironforge.lo -MD -MP -MF "$(DEPDIR)/sc_guard_ironforge.Tpo" -c -o sc_guard_ironforge.lo `test -f 'cpp-scripts/guards/sc_guard_ironforge.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_ironforge.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_ironforge.Tpo" "$(DEPDIR)/sc_guard_ironforge.Plo"; else rm -f "$(DEPDIR)/sc_guard_ironforge.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_ironforge.cpp' object='sc_guard_ironforge.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_ironforge.lo `test -f 'cpp-scripts/guards/sc_guard_ironforge.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_ironforge.cpp
+
+sc_guard_mulgore.lo: cpp-scripts/guards/sc_guard_mulgore.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_mulgore.lo -MD -MP -MF "$(DEPDIR)/sc_guard_mulgore.Tpo" -c -o sc_guard_mulgore.lo `test -f 'cpp-scripts/guards/sc_guard_mulgore.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_mulgore.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_mulgore.Tpo" "$(DEPDIR)/sc_guard_mulgore.Plo"; else rm -f "$(DEPDIR)/sc_guard_mulgore.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_mulgore.cpp' object='sc_guard_mulgore.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_mulgore.lo `test -f 'cpp-scripts/guards/sc_guard_mulgore.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_mulgore.cpp
+
+sc_guard_orgrimmar.lo: cpp-scripts/guards/sc_guard_orgrimmar.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_orgrimmar.lo -MD -MP -MF "$(DEPDIR)/sc_guard_orgrimmar.Tpo" -c -o sc_guard_orgrimmar.lo `test -f 'cpp-scripts/guards/sc_guard_orgrimmar.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_orgrimmar.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_orgrimmar.Tpo" "$(DEPDIR)/sc_guard_orgrimmar.Plo"; else rm -f "$(DEPDIR)/sc_guard_orgrimmar.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_orgrimmar.cpp' object='sc_guard_orgrimmar.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_orgrimmar.lo `test -f 'cpp-scripts/guards/sc_guard_orgrimmar.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_orgrimmar.cpp
+
+sc_guard_stormwind.lo: cpp-scripts/guards/sc_guard_stormwind.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_stormwind.lo -MD -MP -MF "$(DEPDIR)/sc_guard_stormwind.Tpo" -c -o sc_guard_stormwind.lo `test -f 'cpp-scripts/guards/sc_guard_stormwind.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_stormwind.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_stormwind.Tpo" "$(DEPDIR)/sc_guard_stormwind.Plo"; else rm -f "$(DEPDIR)/sc_guard_stormwind.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_stormwind.cpp' object='sc_guard_stormwind.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_stormwind.lo `test -f 'cpp-scripts/guards/sc_guard_stormwind.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_stormwind.cpp
+
+sc_guard_teldrassil.lo: cpp-scripts/guards/sc_guard_teldrassil.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_teldrassil.lo -MD -MP -MF "$(DEPDIR)/sc_guard_teldrassil.Tpo" -c -o sc_guard_teldrassil.lo `test -f 'cpp-scripts/guards/sc_guard_teldrassil.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_teldrassil.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_teldrassil.Tpo" "$(DEPDIR)/sc_guard_teldrassil.Plo"; else rm -f "$(DEPDIR)/sc_guard_teldrassil.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_teldrassil.cpp' object='sc_guard_teldrassil.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_teldrassil.lo `test -f 'cpp-scripts/guards/sc_guard_teldrassil.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_teldrassil.cpp
+
+sc_guard_tirisfal.lo: cpp-scripts/guards/sc_guard_tirisfal.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_tirisfal.lo -MD -MP -MF "$(DEPDIR)/sc_guard_tirisfal.Tpo" -c -o sc_guard_tirisfal.lo `test -f 'cpp-scripts/guards/sc_guard_tirisfal.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_tirisfal.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_tirisfal.Tpo" "$(DEPDIR)/sc_guard_tirisfal.Plo"; else rm -f "$(DEPDIR)/sc_guard_tirisfal.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_tirisfal.cpp' object='sc_guard_tirisfal.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_tirisfal.lo `test -f 'cpp-scripts/guards/sc_guard_tirisfal.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_tirisfal.cpp
+
+sc_guard_undercity.lo: cpp-scripts/guards/sc_guard_undercity.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guard_undercity.lo -MD -MP -MF "$(DEPDIR)/sc_guard_undercity.Tpo" -c -o sc_guard_undercity.lo `test -f 'cpp-scripts/guards/sc_guard_undercity.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_undercity.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guard_undercity.Tpo" "$(DEPDIR)/sc_guard_undercity.Plo"; else rm -f "$(DEPDIR)/sc_guard_undercity.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/guards/sc_guard_undercity.cpp' object='sc_guard_undercity.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guard_undercity.lo `test -f 'cpp-scripts/guards/sc_guard_undercity.cpp' || echo '$(srcdir)/'`cpp-scripts/guards/sc_guard_undercity.cpp
+
+sc_alliance_commander.lo: cpp-scripts/honor/alliance/sc_alliance_commander.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_commander.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_commander.Tpo" -c -o sc_alliance_commander.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_commander.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_commander.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_commander.Tpo" "$(DEPDIR)/sc_alliance_commander.Plo"; else rm -f "$(DEPDIR)/sc_alliance_commander.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_commander.cpp' object='sc_alliance_commander.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_commander.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_commander.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_commander.cpp
+
+sc_alliance_corporal.lo: cpp-scripts/honor/alliance/sc_alliance_corporal.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_corporal.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_corporal.Tpo" -c -o sc_alliance_corporal.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_corporal.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_corporal.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_corporal.Tpo" "$(DEPDIR)/sc_alliance_corporal.Plo"; else rm -f "$(DEPDIR)/sc_alliance_corporal.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_corporal.cpp' object='sc_alliance_corporal.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_corporal.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_corporal.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_corporal.cpp
+
+sc_alliance_field_marshal.lo: cpp-scripts/honor/alliance/sc_alliance_field_marshal.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_field_marshal.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_field_marshal.Tpo" -c -o sc_alliance_field_marshal.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_field_marshal.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_field_marshal.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_field_marshal.Tpo" "$(DEPDIR)/sc_alliance_field_marshal.Plo"; else rm -f "$(DEPDIR)/sc_alliance_field_marshal.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_field_marshal.cpp' object='sc_alliance_field_marshal.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_field_marshal.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_field_marshal.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_field_marshal.cpp
+
+sc_alliance_grand_marshal.lo: cpp-scripts/honor/alliance/sc_alliance_grand_marshal.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_grand_marshal.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_grand_marshal.Tpo" -c -o sc_alliance_grand_marshal.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_grand_marshal.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_grand_marshal.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_grand_marshal.Tpo" "$(DEPDIR)/sc_alliance_grand_marshal.Plo"; else rm -f "$(DEPDIR)/sc_alliance_grand_marshal.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_grand_marshal.cpp' object='sc_alliance_grand_marshal.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_grand_marshal.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_grand_marshal.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_grand_marshal.cpp
+
+sc_alliance_knight-captain.lo: cpp-scripts/honor/alliance/sc_alliance_knight-captain.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_knight-captain.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_knight-captain.Tpo" -c -o sc_alliance_knight-captain.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_knight-captain.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_knight-captain.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_knight-captain.Tpo" "$(DEPDIR)/sc_alliance_knight-captain.Plo"; else rm -f "$(DEPDIR)/sc_alliance_knight-captain.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_knight-captain.cpp' object='sc_alliance_knight-captain.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_knight-captain.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_knight-captain.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_knight-captain.cpp
+
+sc_alliance_knight-lieutenant.lo: cpp-scripts/honor/alliance/sc_alliance_knight-lieutenant.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_knight-lieutenant.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_knight-lieutenant.Tpo" -c -o sc_alliance_knight-lieutenant.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_knight-lieutenant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_knight-lieutenant.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_knight-lieutenant.Tpo" "$(DEPDIR)/sc_alliance_knight-lieutenant.Plo"; else rm -f "$(DEPDIR)/sc_alliance_knight-lieutenant.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_knight-lieutenant.cpp' object='sc_alliance_knight-lieutenant.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_knight-lieutenant.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_knight-lieutenant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_knight-lieutenant.cpp
+
+sc_alliance_knight.lo: cpp-scripts/honor/alliance/sc_alliance_knight.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_knight.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_knight.Tpo" -c -o sc_alliance_knight.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_knight.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_knight.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_knight.Tpo" "$(DEPDIR)/sc_alliance_knight.Plo"; else rm -f "$(DEPDIR)/sc_alliance_knight.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_knight.cpp' object='sc_alliance_knight.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_knight.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_knight.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_knight.cpp
+
+sc_alliance_knight_champion.lo: cpp-scripts/honor/alliance/sc_alliance_knight_champion.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_knight_champion.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_knight_champion.Tpo" -c -o sc_alliance_knight_champion.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_knight_champion.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_knight_champion.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_knight_champion.Tpo" "$(DEPDIR)/sc_alliance_knight_champion.Plo"; else rm -f "$(DEPDIR)/sc_alliance_knight_champion.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_knight_champion.cpp' object='sc_alliance_knight_champion.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_knight_champion.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_knight_champion.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_knight_champion.cpp
+
+sc_alliance_lieutenant_commander.lo: cpp-scripts/honor/alliance/sc_alliance_lieutenant_commander.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_lieutenant_commander.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_lieutenant_commander.Tpo" -c -o sc_alliance_lieutenant_commander.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_lieutenant_commander.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_lieutenant_commander.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_lieutenant_commander.Tpo" "$(DEPDIR)/sc_alliance_lieutenant_commander.Plo"; else rm -f "$(DEPDIR)/sc_alliance_lieutenant_commander.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_lieutenant_commander.cpp' object='sc_alliance_lieutenant_commander.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_lieutenant_commander.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_lieutenant_commander.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_lieutenant_commander.cpp
+
+sc_alliance_marshal.lo: cpp-scripts/honor/alliance/sc_alliance_marshal.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_marshal.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_marshal.Tpo" -c -o sc_alliance_marshal.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_marshal.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_marshal.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_marshal.Tpo" "$(DEPDIR)/sc_alliance_marshal.Plo"; else rm -f "$(DEPDIR)/sc_alliance_marshal.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_marshal.cpp' object='sc_alliance_marshal.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_marshal.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_marshal.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_marshal.cpp
+
+sc_alliance_master_sergeant.lo: cpp-scripts/honor/alliance/sc_alliance_master_sergeant.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_master_sergeant.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_master_sergeant.Tpo" -c -o sc_alliance_master_sergeant.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_master_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_master_sergeant.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_master_sergeant.Tpo" "$(DEPDIR)/sc_alliance_master_sergeant.Plo"; else rm -f "$(DEPDIR)/sc_alliance_master_sergeant.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_master_sergeant.cpp' object='sc_alliance_master_sergeant.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_master_sergeant.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_master_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_master_sergeant.cpp
+
+sc_alliance_private.lo: cpp-scripts/honor/alliance/sc_alliance_private.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_private.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_private.Tpo" -c -o sc_alliance_private.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_private.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_private.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_private.Tpo" "$(DEPDIR)/sc_alliance_private.Plo"; else rm -f "$(DEPDIR)/sc_alliance_private.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_private.cpp' object='sc_alliance_private.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_private.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_private.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_private.cpp
+
+sc_alliance_sergeant.lo: cpp-scripts/honor/alliance/sc_alliance_sergeant.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_sergeant.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_sergeant.Tpo" -c -o sc_alliance_sergeant.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_sergeant.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_sergeant.Tpo" "$(DEPDIR)/sc_alliance_sergeant.Plo"; else rm -f "$(DEPDIR)/sc_alliance_sergeant.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_sergeant.cpp' object='sc_alliance_sergeant.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_sergeant.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_sergeant.cpp
+
+sc_alliance_sergeant_major.lo: cpp-scripts/honor/alliance/sc_alliance_sergeant_major.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_alliance_sergeant_major.lo -MD -MP -MF "$(DEPDIR)/sc_alliance_sergeant_major.Tpo" -c -o sc_alliance_sergeant_major.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_sergeant_major.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_sergeant_major.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_alliance_sergeant_major.Tpo" "$(DEPDIR)/sc_alliance_sergeant_major.Plo"; else rm -f "$(DEPDIR)/sc_alliance_sergeant_major.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/alliance/sc_alliance_sergeant_major.cpp' object='sc_alliance_sergeant_major.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_alliance_sergeant_major.lo `test -f 'cpp-scripts/honor/alliance/sc_alliance_sergeant_major.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/alliance/sc_alliance_sergeant_major.cpp
+
+sc_horde_blood_guard.lo: cpp-scripts/honor/horde/sc_horde_blood_guard.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_blood_guard.lo -MD -MP -MF "$(DEPDIR)/sc_horde_blood_guard.Tpo" -c -o sc_horde_blood_guard.lo `test -f 'cpp-scripts/honor/horde/sc_horde_blood_guard.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_blood_guard.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_blood_guard.Tpo" "$(DEPDIR)/sc_horde_blood_guard.Plo"; else rm -f "$(DEPDIR)/sc_horde_blood_guard.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_blood_guard.cpp' object='sc_horde_blood_guard.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_blood_guard.lo `test -f 'cpp-scripts/honor/horde/sc_horde_blood_guard.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_blood_guard.cpp
+
+sc_horde_centurion.lo: cpp-scripts/honor/horde/sc_horde_centurion.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_centurion.lo -MD -MP -MF "$(DEPDIR)/sc_horde_centurion.Tpo" -c -o sc_horde_centurion.lo `test -f 'cpp-scripts/honor/horde/sc_horde_centurion.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_centurion.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_centurion.Tpo" "$(DEPDIR)/sc_horde_centurion.Plo"; else rm -f "$(DEPDIR)/sc_horde_centurion.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_centurion.cpp' object='sc_horde_centurion.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_centurion.lo `test -f 'cpp-scripts/honor/horde/sc_horde_centurion.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_centurion.cpp
+
+sc_horde_champion.lo: cpp-scripts/honor/horde/sc_horde_champion.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_champion.lo -MD -MP -MF "$(DEPDIR)/sc_horde_champion.Tpo" -c -o sc_horde_champion.lo `test -f 'cpp-scripts/honor/horde/sc_horde_champion.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_champion.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_champion.Tpo" "$(DEPDIR)/sc_horde_champion.Plo"; else rm -f "$(DEPDIR)/sc_horde_champion.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_champion.cpp' object='sc_horde_champion.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_champion.lo `test -f 'cpp-scripts/honor/horde/sc_horde_champion.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_champion.cpp
+
+sc_horde_first_sergeant.lo: cpp-scripts/honor/horde/sc_horde_first_sergeant.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_first_sergeant.lo -MD -MP -MF "$(DEPDIR)/sc_horde_first_sergeant.Tpo" -c -o sc_horde_first_sergeant.lo `test -f 'cpp-scripts/honor/horde/sc_horde_first_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_first_sergeant.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_first_sergeant.Tpo" "$(DEPDIR)/sc_horde_first_sergeant.Plo"; else rm -f "$(DEPDIR)/sc_horde_first_sergeant.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_first_sergeant.cpp' object='sc_horde_first_sergeant.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_first_sergeant.lo `test -f 'cpp-scripts/honor/horde/sc_horde_first_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_first_sergeant.cpp
+
+sc_horde_general.lo: cpp-scripts/honor/horde/sc_horde_general.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_general.lo -MD -MP -MF "$(DEPDIR)/sc_horde_general.Tpo" -c -o sc_horde_general.lo `test -f 'cpp-scripts/honor/horde/sc_horde_general.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_general.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_general.Tpo" "$(DEPDIR)/sc_horde_general.Plo"; else rm -f "$(DEPDIR)/sc_horde_general.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_general.cpp' object='sc_horde_general.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_general.lo `test -f 'cpp-scripts/honor/horde/sc_horde_general.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_general.cpp
+
+sc_horde_grunt.lo: cpp-scripts/honor/horde/sc_horde_grunt.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_grunt.lo -MD -MP -MF "$(DEPDIR)/sc_horde_grunt.Tpo" -c -o sc_horde_grunt.lo `test -f 'cpp-scripts/honor/horde/sc_horde_grunt.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_grunt.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_grunt.Tpo" "$(DEPDIR)/sc_horde_grunt.Plo"; else rm -f "$(DEPDIR)/sc_horde_grunt.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_grunt.cpp' object='sc_horde_grunt.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_grunt.lo `test -f 'cpp-scripts/honor/horde/sc_horde_grunt.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_grunt.cpp
+
+sc_horde_high_warlord.lo: cpp-scripts/honor/horde/sc_horde_high_warlord.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_high_warlord.lo -MD -MP -MF "$(DEPDIR)/sc_horde_high_warlord.Tpo" -c -o sc_horde_high_warlord.lo `test -f 'cpp-scripts/honor/horde/sc_horde_high_warlord.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_high_warlord.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_high_warlord.Tpo" "$(DEPDIR)/sc_horde_high_warlord.Plo"; else rm -f "$(DEPDIR)/sc_horde_high_warlord.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_high_warlord.cpp' object='sc_horde_high_warlord.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_high_warlord.lo `test -f 'cpp-scripts/honor/horde/sc_horde_high_warlord.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_high_warlord.cpp
+
+sc_horde_legionaire.lo: cpp-scripts/honor/horde/sc_horde_legionaire.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_legionaire.lo -MD -MP -MF "$(DEPDIR)/sc_horde_legionaire.Tpo" -c -o sc_horde_legionaire.lo `test -f 'cpp-scripts/honor/horde/sc_horde_legionaire.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_legionaire.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_legionaire.Tpo" "$(DEPDIR)/sc_horde_legionaire.Plo"; else rm -f "$(DEPDIR)/sc_horde_legionaire.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_legionaire.cpp' object='sc_horde_legionaire.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_legionaire.lo `test -f 'cpp-scripts/honor/horde/sc_horde_legionaire.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_legionaire.cpp
+
+sc_horde_lieutenant_general.lo: cpp-scripts/honor/horde/sc_horde_lieutenant_general.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_lieutenant_general.lo -MD -MP -MF "$(DEPDIR)/sc_horde_lieutenant_general.Tpo" -c -o sc_horde_lieutenant_general.lo `test -f 'cpp-scripts/honor/horde/sc_horde_lieutenant_general.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_lieutenant_general.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_lieutenant_general.Tpo" "$(DEPDIR)/sc_horde_lieutenant_general.Plo"; else rm -f "$(DEPDIR)/sc_horde_lieutenant_general.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_lieutenant_general.cpp' object='sc_horde_lieutenant_general.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_lieutenant_general.lo `test -f 'cpp-scripts/honor/horde/sc_horde_lieutenant_general.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_lieutenant_general.cpp
+
+sc_horde_scout.lo: cpp-scripts/honor/horde/sc_horde_scout.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_scout.lo -MD -MP -MF "$(DEPDIR)/sc_horde_scout.Tpo" -c -o sc_horde_scout.lo `test -f 'cpp-scripts/honor/horde/sc_horde_scout.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_scout.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_scout.Tpo" "$(DEPDIR)/sc_horde_scout.Plo"; else rm -f "$(DEPDIR)/sc_horde_scout.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_scout.cpp' object='sc_horde_scout.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_scout.lo `test -f 'cpp-scripts/honor/horde/sc_horde_scout.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_scout.cpp
+
+sc_horde_senior_sergeant.lo: cpp-scripts/honor/horde/sc_horde_senior_sergeant.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_senior_sergeant.lo -MD -MP -MF "$(DEPDIR)/sc_horde_senior_sergeant.Tpo" -c -o sc_horde_senior_sergeant.lo `test -f 'cpp-scripts/honor/horde/sc_horde_senior_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_senior_sergeant.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_senior_sergeant.Tpo" "$(DEPDIR)/sc_horde_senior_sergeant.Plo"; else rm -f "$(DEPDIR)/sc_horde_senior_sergeant.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_senior_sergeant.cpp' object='sc_horde_senior_sergeant.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_senior_sergeant.lo `test -f 'cpp-scripts/honor/horde/sc_horde_senior_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_senior_sergeant.cpp
+
+sc_horde_sergeant.lo: cpp-scripts/honor/horde/sc_horde_sergeant.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_sergeant.lo -MD -MP -MF "$(DEPDIR)/sc_horde_sergeant.Tpo" -c -o sc_horde_sergeant.lo `test -f 'cpp-scripts/honor/horde/sc_horde_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_sergeant.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_sergeant.Tpo" "$(DEPDIR)/sc_horde_sergeant.Plo"; else rm -f "$(DEPDIR)/sc_horde_sergeant.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_sergeant.cpp' object='sc_horde_sergeant.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_sergeant.lo `test -f 'cpp-scripts/honor/horde/sc_horde_sergeant.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_sergeant.cpp
+
+sc_horde_stone_guard.lo: cpp-scripts/honor/horde/sc_horde_stone_guard.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_stone_guard.lo -MD -MP -MF "$(DEPDIR)/sc_horde_stone_guard.Tpo" -c -o sc_horde_stone_guard.lo `test -f 'cpp-scripts/honor/horde/sc_horde_stone_guard.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_stone_guard.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_stone_guard.Tpo" "$(DEPDIR)/sc_horde_stone_guard.Plo"; else rm -f "$(DEPDIR)/sc_horde_stone_guard.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_stone_guard.cpp' object='sc_horde_stone_guard.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_stone_guard.lo `test -f 'cpp-scripts/honor/horde/sc_horde_stone_guard.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_stone_guard.cpp
+
+sc_horde_warlord.lo: cpp-scripts/honor/horde/sc_horde_warlord.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_horde_warlord.lo -MD -MP -MF "$(DEPDIR)/sc_horde_warlord.Tpo" -c -o sc_horde_warlord.lo `test -f 'cpp-scripts/honor/horde/sc_horde_warlord.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_warlord.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_horde_warlord.Tpo" "$(DEPDIR)/sc_horde_warlord.Plo"; else rm -f "$(DEPDIR)/sc_horde_warlord.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/honor/horde/sc_horde_warlord.cpp' object='sc_horde_warlord.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_horde_warlord.lo `test -f 'cpp-scripts/honor/horde/sc_horde_warlord.cpp' || echo '$(srcdir)/'`cpp-scripts/honor/horde/sc_horde_warlord.cpp
+
+sc_battlemaster.lo: cpp-scripts/serveus/sc_battlemaster.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_battlemaster.lo -MD -MP -MF "$(DEPDIR)/sc_battlemaster.Tpo" -c -o sc_battlemaster.lo `test -f 'cpp-scripts/serveus/sc_battlemaster.cpp' || echo '$(srcdir)/'`cpp-scripts/serveus/sc_battlemaster.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_battlemaster.Tpo" "$(DEPDIR)/sc_battlemaster.Plo"; else rm -f "$(DEPDIR)/sc_battlemaster.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/serveus/sc_battlemaster.cpp' object='sc_battlemaster.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_battlemaster.lo `test -f 'cpp-scripts/serveus/sc_battlemaster.cpp' || echo '$(srcdir)/'`cpp-scripts/serveus/sc_battlemaster.cpp
+
+sc_guildmaster.lo: cpp-scripts/serveus/sc_guildmaster.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_guildmaster.lo -MD -MP -MF "$(DEPDIR)/sc_guildmaster.Tpo" -c -o sc_guildmaster.lo `test -f 'cpp-scripts/serveus/sc_guildmaster.cpp' || echo '$(srcdir)/'`cpp-scripts/serveus/sc_guildmaster.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_guildmaster.Tpo" "$(DEPDIR)/sc_guildmaster.Plo"; else rm -f "$(DEPDIR)/sc_guildmaster.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/serveus/sc_guildmaster.cpp' object='sc_guildmaster.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_guildmaster.lo `test -f 'cpp-scripts/serveus/sc_guildmaster.cpp' || echo '$(srcdir)/'`cpp-scripts/serveus/sc_guildmaster.cpp
+
+sc_travelmaster.lo: cpp-scripts/serveus/sc_travelmaster.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sc_travelmaster.lo -MD -MP -MF "$(DEPDIR)/sc_travelmaster.Tpo" -c -o sc_travelmaster.lo `test -f 'cpp-scripts/serveus/sc_travelmaster.cpp' || echo '$(srcdir)/'`cpp-scripts/serveus/sc_travelmaster.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/sc_travelmaster.Tpo" "$(DEPDIR)/sc_travelmaster.Plo"; else rm -f "$(DEPDIR)/sc_travelmaster.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cpp-scripts/serveus/sc_travelmaster.cpp' object='sc_travelmaster.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sc_travelmaster.lo `test -f 'cpp-scripts/serveus/sc_travelmaster.cpp' || echo '$(srcdir)/'`cpp-scripts/serveus/sc_travelmaster.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
