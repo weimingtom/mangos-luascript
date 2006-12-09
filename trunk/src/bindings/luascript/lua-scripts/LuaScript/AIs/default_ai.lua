@@ -3,7 +3,7 @@ default_ai = { }
 -- AI`s are in deep test ... i mean realy deep test
 -- Things are getting little tought , better wait for manual before starting codding AI`s
 
---EVERY script should have the first 4 functions
+--EVERY script should have the first 3 functions
 --If you dont have them , then simply your script wont be loaded ;)
 
 --Called on every new object initialization
@@ -25,12 +25,13 @@ log("default_ai Exit")
 end
 
 
--- Update function , called at each update cycle
+--These down are callbacks from mangos ,you may skip some of them if you dont need them
+
+-- Update function , called at each update cycle ,you can set the update interval using LuaAI:SetUpdateInterval(time) , time is in miliseconds ( 1000ms = 1sec )
+--  if time is zero then Update wont be called at all , default is zero 
 default_ai["Update"] = function(LuaAI)
 
 end
-
---These down are callbacks from mangos ,you may skip some of them if you dont need them
 
 --Called on destroying of the LuaAI class ( eg this is your destructor ) , It is opcional and can be scipped
 default_ai["DeInit"] = function(LuaAI)
@@ -59,7 +60,6 @@ log("default_ai DamageInflict")
 end
 
 -- Is unit visibale for MoveInLineOfSight , have to return bool
--- Warning .... this will also be called when your Creature is DEAD :)
 default_ai["IsVisible"] = function(LuaAI,unit)
 log("default_ai IsVisible")
 return true

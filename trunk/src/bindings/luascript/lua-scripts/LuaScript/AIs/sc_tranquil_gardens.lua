@@ -43,6 +43,7 @@ tranquil_warrior_ai = { }
 tranquil_warrior_ai["Init"] = function(LuaAI)
 -- TODO need to add check if the the unit is in tranquil gardens ,if no ,dont add him ,probbably assign other AI
 register_tranquil_warrior(LuaAI)
+LuaAI:SetUpdateInterval(2000)
 log("tranquil_warrior Init")
 end
 
@@ -57,6 +58,7 @@ unregister_tranquil_warrior(LuaAI)
 end
 
 tranquil_warrior_ai["Update"] = function(LuaAI)
+log("tranquil_warrior Update %d" , LuaAI:GetCreature():GetGUIDLow() )
 end
 
 tranquil_warrior_ai["MoveInLineOfSight"] = function(LuaAI,unit)

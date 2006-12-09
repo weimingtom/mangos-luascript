@@ -32,6 +32,9 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
   private:
     luabind::object m_CurrentState;
 
+	uint32 UpdateInterval;
+	uint32 currTime;
+
   public:
     Creature* m_creature;
 	LuaAI_Proxy* m_proxy;
@@ -44,6 +47,8 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
     void SetCurrentState(const luabind::object& s);
 
 	void SetInvalid(const luabind::object& s) { m_CurrentState = s; }
+
+    inline void SetUpdateInterval(const uint32& time) { UpdateInterval = time; currTime = 0; }
 
 	Creature* GetCreature() { return m_creature; }
     //this method makes sure the current state object is valid before calling
@@ -120,6 +125,8 @@ class LuaAI_Proxy
 	LuaAI_Proxy() : m_ai(NULL)  { }
 	LuaAI_Proxy(LuaAI* ai) :m_ai(ai)  { }
 	~LuaAI_Proxy() { }
+
+    void SetUpdateInterval(const uint32& time) {m_ai->SetUpdateInterval(time); }
 
     inline void SetCurrentState(const luabind::object& s) { m_ai->SetCurrentState(s); }
 

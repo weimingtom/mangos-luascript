@@ -409,6 +409,7 @@ return false;
 MANGOS_DLL_EXPORT
 CreatureAI* GetAI(Creature *_Creature )
 {
+LuaAI* ai = NULL;
 ML_TRY
 
 if(!*_Creature->GetCreatureInfo()->ScriptName) return NULL;
@@ -423,7 +424,7 @@ luabind::adl::object start_state = luabind::call_function<luabind::adl::object>(
 																																			   );
 if( !IsValidLuaAIState(start_state) ) return NULL;
 
-LuaAI* ai = new LuaAI(_Creature);
+ai = new LuaAI(_Creature);
 ai->SetCurrentState(start_state);
 
 luabind::adl::object ob = start_state["Init"]; 
@@ -433,6 +434,7 @@ luabind::call_function<void>(ob,boost::ref<LuaAI_Proxy>(*(ai->m_proxy))  );
 return (CreatureAI*)ai;
 
 ML_CATCH
+if(ai) delete ai;     //if exception is thrown after allocating ai we will have memory leaks
 
 return NULL;
 }

@@ -10,6 +10,7 @@
 #include "TargetedMovementGenerator.h"
 #include "ScriptMgr.h"
 #include "Common.h"
+#include "Creature.h"
 
 typedef std::map<uint32,LuaAI*> Lua_Ai_Register_type;
 Lua_Ai_Register_type Lua_Ai_Register;
@@ -30,6 +31,7 @@ module(L)
 	.def("DoStopAttack", &LuaAI_Proxy::DoStopAttack)
 	.def("DoCast", &LuaAI_Proxy::DoCast)
 	.def("DoSay", &LuaAI_Proxy::DoSay)
+	.def("SetUpdateInterval", &LuaAI_Proxy::SetUpdateInterval)
 ];
 
 	return 0;
@@ -54,7 +56,7 @@ bool IsValidLuaAIState(const luabind::adl::object& ob)
 	}
 
 LuaAI::LuaAI(Creature* creature)
-	: m_creature(creature)
+	: m_creature(creature),UpdateInterval(0),currTime(0)
     {
 	m_proxy = new LuaAI_Proxy(this);
 	register_LuaAI(this);
@@ -99,10 +101,22 @@ void LuaAI::Reload()
     luabind::call_function<void>(ob,boost::ref<LuaAI_Proxy>(*(this->m_proxy)) );
 	}
 
-void LuaAI::UpdateAI(const uint32)
+void LuaAI::UpdateAI(const uint32 diff)
 {
 ML_TRY
+if( this->m_creature->getDeathState() == DEAD ) return;
+
+//this is for calling "Update" func in lua , you can change the update interval 
+//id UpdateInterval is 0 then "Update" wont be called at all
+if( UpdateInterval != 0 )
+	{
+if(this->currTime > this->UpdateInterval )
+	{
 UpdateScriptedStateMachine();
+currTime -= UpdateInterval;
+	}
+else currTime += diff;
+	}
 
 
     if( m_creature->getVictim() != NULL )
@@ -134,8 +148,12 @@ ML_CATCH
 
 void LuaAI::DoStartAttack(Unit* victim)
 {
+    //this is for mele attacks only
     m_creature->Attack(victim);
     (*m_creature)->Mutate(new TargetedMovementGenerator(*victim));
+
+	 if(victim->HasStealthAura())
+         victim->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
 }
 
 void LuaAI::DoStopAttack()
@@ -166,6 +184,7 @@ void LuaAI::SetCurrentState(const luabind::object& s)
 
 void LuaAI::UpdateScriptedStateMachine()
 {
+
     //make sure the state is valid before calling its Execute "method"
     if (m_CurrentState.is_valid())
     {
@@ -202,6 +221,7 @@ void LuaAI::ChangeState(const luabind::object& new_state)
 //These are the callbacks that will be exported to lua
 void LuaAI::MoveInLineOfSight(Unit * u)
     {
+
 	ML_TRY
 	using namespace luabind;
 	object ob = this->m_CurrentState["MoveInLineOfSight"];
@@ -219,6 +239,7 @@ void LuaAI::AttackStart(Unit * u)
 
 	if( type(ob) == LUA_TFUNCTION )
 		call_function<void>(ob,boost::ref<LuaAI_Proxy>(*(this->m_proxy)),boost::ref<Unit>(*u) );
+
 	ML_CATCH
 	}
 
