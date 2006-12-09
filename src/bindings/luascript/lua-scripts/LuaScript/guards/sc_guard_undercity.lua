@@ -6,21 +6,21 @@ m_scripts[scriptname] = {}
 
 m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
 
-    player:ADD_GOSSIP_ITEM( 0, "The bank"              , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
-    player:ADD_GOSSIP_ITEM( 0, "The bat handler"       , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)
-    player:ADD_GOSSIP_ITEM( 0, "The guild master"      , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3)
-    player:ADD_GOSSIP_ITEM( 0, "The inn"               , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4)
-    player:ADD_GOSSIP_ITEM( 0, "The mailbox"           , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5)
-    player:ADD_GOSSIP_ITEM( 0, "The auction house"     , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6)
-    player:ADD_GOSSIP_ITEM( 0, "The zeppelin master"   , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7)
-    player:ADD_GOSSIP_ITEM( 0, "The weapon master"     , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8)
-    player:ADD_GOSSIP_ITEM( 0, "The stable master"     , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9)
-    player:ADD_GOSSIP_ITEM( 0, "The battlemaster"      , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10)
-    player:ADD_GOSSIP_ITEM( 0, "A class trainer"       , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11)
-    player:ADD_GOSSIP_ITEM( 0, "A profession trainer"  , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 12)
-    player:SEND_GOSSIP_MENU(3543,_Creature:GetGUID())
+	    player:ADD_GOSSIP_ITEM( 0, "The Bank"				, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
+	    player:ADD_GOSSIP_ITEM( 0, "Bat Handler"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)
+	    player:ADD_GOSSIP_ITEM( 0, "Guild Master"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3)
+	    player:ADD_GOSSIP_ITEM( 0, "The Inn"				, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4)
+	    player:ADD_GOSSIP_ITEM( 0, "The Mailbox"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5)
+	    player:ADD_GOSSIP_ITEM( 0, "Auction House"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6)
+	    player:ADD_GOSSIP_ITEM( 0, "Zeppelin Master"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7)
+	    player:ADD_GOSSIP_ITEM( 0, "Weapon Master"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8)
+	    player:ADD_GOSSIP_ITEM( 0, "Stable Master"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9)
+	    player:ADD_GOSSIP_ITEM( 0, "Battlemaster"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10)
+	    player:ADD_GOSSIP_ITEM( 0, "Class Trainer"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11)
+	    player:ADD_GOSSIP_ITEM( 0, "Profession Trainer"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 12)
+	    player:SEND_GOSSIP_MENU(3543,_Creature:GetGUID())
 
-return RETURN_OK
+	return RETURN_OK
 end
 
 function SendDefaultMenu_guard_undercity(player, _Creature, action)
@@ -29,6 +29,7 @@ function SendDefaultMenu_guard_undercity(player, _Creature, action)
 
         player:SEND_POI(1595.64001464844, 232.455993652344, 99, 6, 0, "Undercity Bank")
         player:SEND_GOSSIP_MENU(3514,_Creature:GetGUID())
+
     elseif action == GOSSIP_ACTION_INFO_DEF + 2 then
 
         player:SEND_POI(1565.90002441406, 271.434997558594, 99, 6, 0, "Undercity Bat Handler")
@@ -44,68 +45,62 @@ function SendDefaultMenu_guard_undercity(player, _Creature, action)
         player:SEND_POI(1639.43005371094, 220.998001098633, 99, 6, 0, "Undercity Inn")
         player:SEND_GOSSIP_MENU(3517,_Creature:GetGUID())
     
-
     elseif action == GOSSIP_ACTION_INFO_DEF + 5 then
 
         player:SEND_POI(1632.68994140625, 219.40299987793, 99, 6, 0, "Undercity Mailbox")
         player:SEND_GOSSIP_MENU(3518,_Creature:GetGUID())
     
-
     elseif action == GOSSIP_ACTION_INFO_DEF + 6 then
 
         player:SEND_POI(2059.0400390625, 274.868988037109, 99, 6, 0, "Undercity Zeppelin")
         player:SEND_GOSSIP_MENU(3519,_Creature:GetGUID())
     
-
     elseif action == GOSSIP_ACTION_INFO_DEF + 7 then
 
         player:SEND_GOSSIP_MENU(3520,_Creature:GetGUID())
     
-
     elseif action == GOSSIP_ACTION_INFO_DEF + 8 then
 
         player:SEND_POI(1670.31005859375, 324.665985107422, 99, 6, 0, "Archibald")
         player:SEND_GOSSIP_MENU(4521,_Creature:GetGUID())
     
-
     elseif action == GOSSIP_ACTION_INFO_DEF + 9 then
 
         player:SEND_POI(1634.18005371094, 226.768005371094, 99, 6, 0, "Anya Maulray")
         player:SEND_GOSSIP_MENU(5979,_Creature:GetGUID())
     
-
     elseif action == GOSSIP_ACTION_INFO_DEF + 10 then
 
-        player:ADD_GOSSIP_ITEM( 0, "Alterac Valley"   , GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 1)
-        player:ADD_GOSSIP_ITEM( 0, "Arathi Basin"     , GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 2)
-        player:ADD_GOSSIP_ITEM( 0, "Warsong Gulch"    , GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 3)
+        player:ADD_GOSSIP_ITEM( 0, "Alterac Valley"		, GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 1)
+        player:ADD_GOSSIP_ITEM( 0, "Arathi Basin"			, GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 2)
+        player:ADD_GOSSIP_ITEM( 0, "Warsong Gulch"		, GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 3)
         player:SEND_GOSSIP_MENU(7527,_Creature:GetGUID())
     
-
     elseif action == GOSSIP_ACTION_INFO_DEF + 11 then
 
-        player:ADD_GOSSIP_ITEM( 0, "Mage"             , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 1)
-        player:ADD_GOSSIP_ITEM( 0, "Priest"           , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 2)
-        player:ADD_GOSSIP_ITEM( 0, "Rogue"            , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 3)
-        player:ADD_GOSSIP_ITEM( 0, "Warlock"          , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 4)
-        player:ADD_GOSSIP_ITEM( 0, "Warrior"          , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 5)
+        player:ADD_GOSSIP_ITEM( 0, "Mage"				, GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 1)
+        player:ADD_GOSSIP_ITEM( 0, "Priest"				, GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 2)
+        player:ADD_GOSSIP_ITEM( 0, "Rogue"				, GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 3)
+        player:ADD_GOSSIP_ITEM( 0, "Warlock"			, GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 4)
+        player:ADD_GOSSIP_ITEM( 0, "Warrior"				, GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 5)
         player:SEND_GOSSIP_MENU(3542,_Creature:GetGUID())
 
     elseif action == GOSSIP_ACTION_INFO_DEF + 12 then
 
-        player:ADD_GOSSIP_ITEM( 0, "Alchemy"              , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 1)
-        player:ADD_GOSSIP_ITEM( 0, "Blacksmithing"        , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 2)
-        player:ADD_GOSSIP_ITEM( 0, "Cooking"              , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 3)
-        player:ADD_GOSSIP_ITEM( 0, "Enchanting"           , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 4)
-        player:ADD_GOSSIP_ITEM( 0, "Engineering"          , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 5)
-        player:ADD_GOSSIP_ITEM( 0, "First Aid"            , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 6)
-        player:ADD_GOSSIP_ITEM( 0, "Fishing"              , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 7)
-        player:ADD_GOSSIP_ITEM( 0, "Herbalism"            , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 8)
-        player:ADD_GOSSIP_ITEM( 0, "Leatherworking"       , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 9)
-        player:ADD_GOSSIP_ITEM( 0, "Mining"               , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 10)
-        player:ADD_GOSSIP_ITEM( 0, "Skinning"             , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 11)
-        player:ADD_GOSSIP_ITEM( 0, "Tailoring"            , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 12)
+        player:ADD_GOSSIP_ITEM( 0, "Alchemy"			, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 1)
+        player:ADD_GOSSIP_ITEM( 0, "Blacksmithing"		, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 2)
+        player:ADD_GOSSIP_ITEM( 0, "Cooking"				, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 3)
+        player:ADD_GOSSIP_ITEM( 0, "Enchanting"			, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 4)
+        player:ADD_GOSSIP_ITEM( 0, "Engineering"			, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 5)
+        player:ADD_GOSSIP_ITEM( 0, "First Aid"			, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 6)
+        player:ADD_GOSSIP_ITEM( 0, "Fishing"				, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 7)
+        player:ADD_GOSSIP_ITEM( 0, "Herbalism"			, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 8)
+        player:ADD_GOSSIP_ITEM( 0, "Leatherworking"		, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 9)
+        player:ADD_GOSSIP_ITEM( 0, "Mining"				, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 10)
+        player:ADD_GOSSIP_ITEM( 0, "Skinning"			, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 11)
+        player:ADD_GOSSIP_ITEM( 0, "Tailoring"			, GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 12)
         player:SEND_GOSSIP_MENU(3541,_Creature:GetGUID())
+
     end
 end
 
@@ -125,6 +120,7 @@ function SendBattleMasterMenu_guard_undercity(player, _Creature, action)
 
         player:SEND_POI(1265.09997558594, 351.182006835937, 99, 6, 0, "Kurden Bloodclaw")
         player:SEND_GOSSIP_MENU(7526,_Creature:GetGUID())
+
     end
 end
 
@@ -154,6 +150,7 @@ function SendClassTrainerMenu_guard_undercity(player, _Creature, action)
 
         player:SEND_POI(1775.59997558594, 418.192993164063, 99, 6, 0, "Undercity Warrior Trainers")
         player:SEND_GOSSIP_MENU(3527,_Creature:GetGUID())
+
     end
 end
 
@@ -218,27 +215,24 @@ function SendProfTrainerMenu_guard_undercity(player, _Creature, action)
 
         player:SEND_POI(1689.55004882813, 193.022994995117, 99, 6, 0, "Undercity Tailoring Trainer")
         player:SEND_GOSSIP_MENU(3539,_Creature:GetGUID())
+
     end
 end
 
 m_scripts[scriptname]["GossipSelect"] = function(player, _Creature, sender, action)
     -- Serving guard_undercity/main menu
     if sender == GOSSIP_SENDER_MAIN then
-
         SendDefaultMenu_guard_undercity(player, _Creature, action)
 
-    -- Came from the second menu already
     elseif sender == GOSSIP_SENDER_SEC_CLASSTRAIN then
-
         SendClassTrainerMenu_guard_undercity(player, _Creature, action)
 
     elseif sender == GOSSIP_SENDER_SEC_PROFTRAIN then
-
         SendProfTrainerMenu_guard_undercity(player, _Creature, action)
 
     elseif sender == GOSSIP_SENDER_SEC_BATTLEINFO then
-
         SendBattleMasterMenu_guard_undercity(player, _Creature, action)
+
     end
 return RETURN_OK
 end
