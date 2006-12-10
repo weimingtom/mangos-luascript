@@ -78,7 +78,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\src\shared;..\..\..\src\framework;..\..\..\dep\include;.\;.\lua\include;.\lua\src\;&quot;.\cpp-scripts&quot;"
+				AdditionalIncludeDirectories="..\..\..\src\shared;..\..\..\src\framework;..\..\..\dep\include;.\;.\lua\include;&quot;\ ..\..\dep\include&quot;;.\lua\src;..\..\..\src\mangosd;..\..\..\src\game;&quot;.\cpp-scripts&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SCRIPT"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
