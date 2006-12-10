@@ -54,7 +54,7 @@ if  data["Talk"][ unit:GetGUIDLow() ] == nil then return end
 				LuaAI:DoSay("Bye Bye !",0)
 				end
 
-			LuaAI:GetCreature():HandleEmoteCommand(3)
+			LuaAI:GetCreature():HandleEmoteCommand(EMOTE_ONESHOT_WAVE)
 			data["Talk"][ unit:GetGUIDLow() ] = 2
 			LuaAI:SetData(data)
 			end
