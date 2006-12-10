@@ -50,6 +50,8 @@ extern Script *m_scripts[MAX_SCRIPTS];
 
 #define VISIBLE_RANGE (26.46f)
 
+void cppDisableScript(const char* scriptname);
+
 void cppLoadScripts();
 void cppScriptsFree();
 void cppScriptsInit();

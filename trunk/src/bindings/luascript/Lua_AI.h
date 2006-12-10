@@ -12,7 +12,6 @@
 #include "luainc.h"
 #include "Creature.h"
 
-
 //Here is big mess .... need to fixup the mess a little
 
 //goind to implement FSM , as it is faster and easyer for exporting to scripting.
@@ -31,6 +30,7 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
   {
   private:
     luabind::object m_CurrentState;
+	luabind::object m_data;
 
 	uint32 UpdateInterval;
 	uint32 currTime;
@@ -41,6 +41,9 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
 
     LuaAI(Creature* creature);
     virtual ~LuaAI();
+
+	luabind::object& Data();
+	void SetData(const luabind::object& data);
      
     void Reload();
 
@@ -102,6 +105,7 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
     // Cast spell
     void DoCast(Unit* victim, uint32 spelId)
     {
+	  m_creature->StopMoving();
       m_creature->CastSpell(victim,spelId,true);
     }
 
@@ -122,11 +126,13 @@ class MANGOS_DLL_DECL LuaAI : public CreatureAI
 class LuaAI_Proxy
 	{
 	public:
-	LuaAI_Proxy() : m_ai(NULL)  { }
 	LuaAI_Proxy(LuaAI* ai) :m_ai(ai)  { }
 	~LuaAI_Proxy() { }
 
     void SetUpdateInterval(const uint32& time) {m_ai->SetUpdateInterval(time); }
+
+    const luabind::object& Data(void) { return this->m_ai->Data(); }
+    void SetData(const luabind::object& data) { this->m_ai->SetData(data); }
 
     inline void SetCurrentState(const luabind::object& s) { m_ai->SetCurrentState(s); }
 
@@ -149,6 +155,10 @@ class LuaAI_Proxy
     {
      m_ai->m_creature->MonsterSay(text,language, m_ai->m_creature->GetGUID());
     }
+    
+    void MoveInLineOfSight_agr(Unit* u);
+	bool needToStop_agr();
+	bool IsVisible_agr(Unit *pl);
 
 	private:
 	LuaAI* m_ai;
@@ -158,5 +168,6 @@ void register_LuaAI(LuaAI* ai);
 void unregister_LuaAI(LuaAI* ai);
 void load_AllAIs();
 void unload_ALLAIs();
+bool isRegistered_LuaAI(Creature* cr);
 
 #endif //LUA_AI_H

@@ -8,8 +8,8 @@
 -- The idea is to split up the creatures in 2 groups casters and warriors 
 
 -- Here is SQL
--- UPDATE `creature_template` SET`ScriptName` = 'tranquil_warrior' WHERE `entry` = 203;
--- UPDATE `creature_template` SET`ScriptName` = 'tranquil_caster' WHERE `entry` = 48;
+-- UPDATE `creature_template` SET`ScriptName` = 'tranquil_caster' WHERE `entry` = 203;
+-- UPDATE `creature_template` SET`ScriptName` = 'tranquil_warrior' WHERE `entry` = 48;
 -- UPDATE `creature_template` SET`ScriptName` = 'tranquil_cheff' WHERE `entry` = 511;
 
 tranquil_warriors_group = { }
@@ -42,9 +42,10 @@ tranquil_warrior_ai = { }
 
 tranquil_warrior_ai["Init"] = function(LuaAI)
 -- TODO need to add check if the the unit is in tranquil gardens ,if no ,dont add him ,probbably assign other AI
-register_tranquil_warrior(LuaAI)
-LuaAI:SetUpdateInterval(2000)
+-- register_tranquil_warrior(LuaAI)
+-- LuaAI:SetUpdateInterval(2000)
 log("tranquil_warrior Init")
+return true
 end
 
 tranquil_warrior_ai["Enter"] = function(LuaAI)
@@ -84,6 +85,7 @@ tranquil_caster_ai["Init"] = function(LuaAI)
 -- TODO need to add check if the the unit is in tranquil gardens ,if no ,dont add him ,probbably assign other AI
 register_tranquil_caster(LuaAI)
 log("tranquil_caster Init " )
+return true
 end
 
 tranquil_caster_ai["Enter"] = function(LuaAI)
