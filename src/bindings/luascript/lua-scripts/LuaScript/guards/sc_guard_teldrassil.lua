@@ -1,9 +1,13 @@
 scriptname = "guard_teldrassil"
+DisableCppScript( scriptname )
 
 -- Taken from ScriptsDev, converted - Greatestevil
 
 m_scripts[scriptname] = {}
 m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
+
+-- TODO this is used by  guard_default_ai , if script is not part of it anymore pls remove this
+guard_default_ai_Gossip_Hello(player,_Creature)
 
 	player:ADD_GOSSIP_ITEM( 6, "Bank"					, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
 	player:ADD_GOSSIP_ITEM( 0, "Rut'theran Ferry"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)

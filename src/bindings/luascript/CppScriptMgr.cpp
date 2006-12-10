@@ -8,7 +8,10 @@ Script *m_scripts[MAX_SCRIPTS];
 void cppScriptsFree()
 {
     for(int i=0;i<nrscripts;i++)
+		{
         delete m_scripts[i];
+		m_scripts[i]=NULL;
+		}
 }
 
 void cppScriptsInit()
@@ -28,6 +31,16 @@ Script* GetScriptByName(std::string Name)
     }
     return NULL;
 }
+
+void cppDisableScript(const char* scriptname)
+	{
+    for(int i=0;i<MAX_SCRIPTS;i++)
+    {
+        if( m_scripts[i] && ( m_scripts[i]->Name == scriptname ) )
+          delete m_scripts[i];
+		  m_scripts[i] = NULL;
+    }
+	}
 
 bool cppGossipHello ( bool& retval, Player * player, Creature *_Creature )
 {

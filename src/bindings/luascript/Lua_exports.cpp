@@ -7,6 +7,8 @@
 #include "Lua_uint64.h"
 #include "Log.h"
 #include "Mail.h"
+#include "Lua_AI.h"
+#include "CppScriptMgr.h"
 
 #ifndef WIN32
 #include "DynamicObject.h"
@@ -144,6 +146,23 @@ void lb_Object_SetUInt64Value( Object* ob ,uint16 index, lua_uint64& value )
 	ob->SetUInt64Value(index,value.m_val);
 	}
 
+int lb_rand_range(int min ,int max)
+	{
+	if( max == min ) return min;
+
+	return min + ( rand()%(abs(max - min)) );
+	}
+
+bool isNULL(Object* ptr)
+	{
+	return ( ptr == NULL );
+	}
+
+bool isNULL(LuaAI_Proxy* ptr)
+	{
+	return ( ptr == NULL );
+	}
+
  class Spell;
  class Aura;
  class DynamicObject;
@@ -154,9 +173,13 @@ int lb_Export_Misc(lua_State* L)
 
 module(L)
     [
+		def("DisableCppScript", &cppDisableScript ),
+		def("isNULL",( bool(*)(LuaAI_Proxy*) )&isNULL),
+		def("isNULL",( bool(*)(Object*) )&isNULL),
         def("log_debug", &log_debug_lua),    //debug log
 		def("log_error",   &log_error_lua),       //error log
-		def("GetSkillLevel", &GetSkillLevel )  //to get skill level
+		def("GetSkillLevel", &GetSkillLevel ),  //to get skill level
+		def("rand_range", &lb_rand_range)    //random number between min and max
     ];
 
 module(L)

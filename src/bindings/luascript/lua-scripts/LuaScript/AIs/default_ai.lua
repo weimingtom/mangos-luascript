@@ -9,7 +9,7 @@ default_ai = { }
 --Called on every new object initialization
 default_ai["Init"] = function(LuaAI)
 log("default_ai Init")
-
+return true
 end
 
 -- Called when state is changed to that
@@ -34,6 +34,7 @@ default_ai["Update"] = function(LuaAI)
 end
 
 --Called on destroying of the LuaAI class ( eg this is your destructor ) , It is opcional and can be scipped
+--This is also called if you return false ,in Init Function , so be extremely carefull
 default_ai["DeInit"] = function(LuaAI)
 log("default_ai DeInit")
 end

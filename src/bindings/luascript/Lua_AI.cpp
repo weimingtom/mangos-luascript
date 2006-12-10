@@ -31,6 +31,11 @@ module(L)
 	.def("DoStopAttack", &LuaAI_Proxy::DoStopAttack)
 	.def("DoCast", &LuaAI_Proxy::DoCast)
 	.def("DoSay", &LuaAI_Proxy::DoSay)
+	.def("Data", &LuaAI_Proxy::Data)
+	.def("SetData", &LuaAI_Proxy::SetData)
+	.def("MoveInLineOfSight_agr", &LuaAI_Proxy::MoveInLineOfSight_agr)
+	.def("needToStop_agr", &LuaAI_Proxy::needToStop_agr)
+	.def("IsVisible_agr", &LuaAI_Proxy::IsVisible_agr)
 	.def("SetUpdateInterval", &LuaAI_Proxy::SetUpdateInterval)
 ];
 
@@ -98,7 +103,9 @@ void LuaAI::Reload()
 
 	ob = start_state["Init"];
 
-    luabind::call_function<void>(ob,boost::ref<LuaAI_Proxy>(*(this->m_proxy)) );
+    if( !luabind::call_function<bool>(ob, boost::ref<LuaAI_Proxy>(*(this->m_proxy)) ) )
+		error_log("[LUA] : AI : creature returned false on Init function ,but will be loaded however ,try to restart the server if you want proper behaviour : %s ",m_creature->GetCreatureInfo()->ScriptName);
+
 	}
 
 void LuaAI::UpdateAI(const uint32 diff)
@@ -154,6 +161,9 @@ void LuaAI::DoStartAttack(Unit* victim)
 
 	 if(victim->HasStealthAura())
          victim->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
+
+	 if (victim->GetTypeId() == TYPEID_PLAYER)
+        m_creature->SetLootRecipient((Player*)victim);
 }
 
 void LuaAI::DoStopAttack()
@@ -162,6 +172,9 @@ void LuaAI::DoStopAttack()
     {
         m_creature->AttackStop();
     }
+    // Remove TargetedMovementGenerator from MotionMaster stack list, and add HomeMovementGenerator instead
+    if( ( *m_creature )->top()->GetMovementGeneratorType() == TARGETED_MOTION_TYPE )
+       ( *m_creature )->TargetedHome();
 }
 
 void LuaAI::DoGoHome()
@@ -221,8 +234,9 @@ void LuaAI::ChangeState(const luabind::object& new_state)
 //These are the callbacks that will be exported to lua
 void LuaAI::MoveInLineOfSight(Unit * u)
     {
-
 	ML_TRY
+	if(m_creature->isDead() ) return;
+
 	using namespace luabind;
 	object ob = this->m_CurrentState["MoveInLineOfSight"];
 
@@ -309,6 +323,17 @@ bool LuaAI::needToStop_default() const
     return ( !m_creature->getVictim()->isTargetableForAttack() || !m_creature->isAlive() );
 }
 
+luabind::object& LuaAI::Data()
+	{
+	return this->m_data;
+	}
+
+void LuaAI::SetData(const luabind::object& data)
+	{
+	//no check if data is valid
+	this->m_data = data;
+	}
+
 //Lua registration form
 
 void register_LuaAI(LuaAI* ai)
@@ -329,6 +354,7 @@ void load_AllAIs()
 
 void unload_ALLAIs()
 	{
+	//invalid object :)
 	luabind::object ob;
 
 	if(Lua_Ai_Register.empty() ) return;
@@ -337,6 +363,7 @@ void unload_ALLAIs()
 	for( iter = Lua_Ai_Register.begin() ; iter != Lua_Ai_Register.end() ; iter++ )
 		{
 		iter->second->SetInvalid(ob);
+		iter->second->SetData(ob);
 		}
 	}
 
@@ -345,3 +372,68 @@ void unregister_LuaAI(LuaAI* ai)
     Lua_Ai_Register_type::iterator iter = Lua_Ai_Register.find(ai->m_creature->GetGUIDLow());
 	if( iter != Lua_Ai_Register.end() ) Lua_Ai_Register.erase(iter);
 	}
+
+bool isRegistered_LuaAI(Creature* cr)
+	{
+    Lua_Ai_Register_type::iterator iter = Lua_Ai_Register.find(cr->GetGUIDLow());
+    return ( iter != Lua_Ai_Register.end() );
+	}
+
+//LuaAI Proxy ,used for passing to lua
+void LuaAI_Proxy::MoveInLineOfSight_agr(Unit* u)
+	{
+    if( !m_ai->m_creature->getVictim() && u->isTargetableForAttack() && m_ai->IsVisible(u) && u->isInAccessablePlaceFor(m_ai->m_creature))
+		{
+        float attackRadius = m_ai->m_creature->GetAttackDistance(u);
+        if(m_ai->m_creature->IsWithinDist(u, attackRadius) && m_ai->m_creature->GetDistanceZ(u) <= CREATURE_Z_ATTACK_RANGE)
+			{
+            if( m_ai->m_creature->IsHostileTo( u ) )
+				{
+                m_ai->AttackStart(u);
+                if(u->HasStealthAura())
+                    u->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
+				}
+			}
+		}
+	}
+
+bool LuaAI_Proxy::needToStop_agr()
+	{
+    if( !m_ai->m_creature->isAlive() || !m_ai->m_creature->getVictim() || !m_ai->m_creature->getVictim()->isTargetableForAttack() )
+        return true;
+
+    if(!m_ai->m_creature->getVictim()->isInAccessablePlaceFor(m_ai->m_creature))
+        return true;
+
+    float rx,ry,rz;
+    m_ai->m_creature->GetRespawnCoord(rx, ry, rz);
+    float spawndist=m_ai->m_creature->GetDistanceSq(rx,ry,rz);
+    float length = m_ai->m_creature->GetDistanceSq(m_ai->m_creature->getVictim());
+    float hostillen=m_ai->m_creature->GetHostilityDistance( m_ai->m_creature->getVictim()->GetGUID() );
+    return (( length > (10.0f + hostillen) * (10.0f + hostillen) && spawndist > 6400.0f )
+        || ( length > (20.0f + hostillen) * (20.0f + hostillen) && spawndist > 2500.0f )
+        || ( length > (30.0f + hostillen) * (30.0f + hostillen) ));
+	}
+
+bool LuaAI_Proxy::IsVisible_agr(Unit *pl)
+{
+    bool seestealth = true;
+    uint32 sight = VISIBLE_RANGE;
+    float dist = m_ai->m_creature->GetDistanceSq(pl);
+    if(pl->HasStealthAura())
+    {
+        int32 seevaluse;
+        int notfront = m_ai->m_creature->isInFront(pl, sight) ? 0 : 1;
+        seevaluse = 5  + m_ai->m_creature->getLevel() * 5 + m_ai->m_creature->m_detectStealth - pl->m_stealthvalue - (uint32)sqrt(dist/100) - 50 * notfront;
+        if(seevaluse<0)
+            seestealth = false;
+        else if(seevaluse>=( rand()%30 ) )
+            seestealth = true;
+        else seestealth = false;
+    }
+                                                            // offset=1.0
+    return seestealth && (dist * 1.0 <= sight) ;
+}
+
+
+

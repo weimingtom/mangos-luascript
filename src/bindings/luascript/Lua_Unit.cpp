@@ -31,6 +31,17 @@ float lb_Unit_GetHostilityDistance(Unit*u , lua_uint64 guid)
   return u->GetHostilityDistance(guid.m_val);
 }
 
+void lb_Unit_LookAt(Unit*u ,Unit* target)
+	{
+	if(! u->HasInArc( 0.1f,target) )
+		{
+		    u->SetInFront(target);
+            if( target->GetTypeId() == TYPEID_PLAYER )
+                u->SendUpdateToPlayer( (Player*)target );
+		}
+
+	}
+
 
 int lb_Export_Unit(lua_State* L)
 {
@@ -38,6 +49,8 @@ int lb_Export_Unit(lua_State* L)
   class_<Unit , Object >   lua_unit("Unit");
 
   lua_unit.def("setAttackTimer", &Unit::setAttackTimer )
+  /*Some custom helper funcs */
+  .def("LookAt", &lb_Unit_LookAt )
   .def("resetAttackTimer", &Unit::resetAttackTimer )
   .def("getAttackTimer", &Unit::getAttackTimer )
   .def("isAttackReady", &Unit::isAttackReady )

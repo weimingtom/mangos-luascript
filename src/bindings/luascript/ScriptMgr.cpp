@@ -52,24 +52,6 @@ int LUA_CheckStatus (int status)
   return status;
 }
 
-MANGOS_DLL_EXPORT
-void ScriptsFree()
-{                                                           // Free resources before library unload
-	// Destroy LuaVM
-	if (LuaVM){
-		try {
-		unload_ALLAIs();
-        luabind::call_function<void>(LuaVM, "ScriptsFree" ); //Call Scripts free function for probably some dealocation
-			} catch(luabind::error&) { } 
-		lua_setgcthreshold(LuaVM, 0);  // Collect Garbage
-		lua_close(LuaVM); // Close it
-		LuaVM = NULL;
-	}
-
-cppScriptsFree();
-}
-
-
 int lb_init(lua_State* L)
 {
     using namespace luabind;
@@ -104,10 +86,29 @@ throw std::runtime_error("Luabind panic error");
 	}
 
 MANGOS_DLL_EXPORT
+void ScriptsFree()
+{                                                           // Free resources before library unload
+	// Destroy LuaVM
+	if (LuaVM){
+		try {
+		unload_ALLAIs();
+        luabind::call_function<void>(LuaVM, "ScriptsFree" ); //Call Scripts free function for probably some dealocation
+			} catch(luabind::error&) { } 
+		lua_setgcthreshold(LuaVM, 0);  // Collect Garbage
+		lua_close(LuaVM); // Close it
+		LuaVM = NULL;
+	}
+    cppScriptsFree();
+}
+
+MANGOS_DLL_EXPORT
 void ScriptsInit()
 {
 	// Load LUA
 	LuaVM = lua_open();
+
+	//init random numbers
+	srand((unsigned int) time(NULL) );
 
 	 //Load the libraries
 	luaopen_base(LuaVM);
@@ -117,18 +118,27 @@ void ScriptsInit()
 	luaopen_math(LuaVM);
 	luaopen_debug(LuaVM);
 
+	//register function to handle lua panic ( called when lua occurs some error ,because lua is in C and it dont have exceptions )
 	lua_atpanic (LuaVM, (lua_CFunction )&lua_at_panic);
 
+	//init Luabind ,used to export C++ stuff to lua ( lua dont have such builtin support )
     lb_init(LuaVM);
+
+	//init the cpp scripts ,need to before callin Mastercript.lua because of DisableCppScript command
+	cppScriptsInit();
     
     // -- Load the Masterscript --
-	if (LUA_CheckStatus(luaL_loadfile(LuaVM, "Masterscript.lua") || lua_pcall(LuaVM, 0, 0, 0))){
-		ScriptsFree(); // Error - Fail, but cleanup! =(
+	if (LUA_CheckStatus(luaL_loadfile(LuaVM, "Masterscript.lua") || lua_pcall(LuaVM, 0, 0, 0)))
+		{
+		 // Error - Fail, but cleanup! =(
+		ScriptsFree(); 
 		return;
-	}
+		}
 
-load_AllAIs();  //going to reload all loaded AI`s if there are any at all
-cppScriptsInit();
+    //going to reload all loaded AI`s if there are any at all
+	//this allows you to change Creature AI at runtime
+	load_AllAIs(); 
+
 }
 
 MANGOS_DLL_EXPORT
@@ -473,7 +483,11 @@ ai->SetCurrentState(start_state);
 
 luabind::adl::object ob = start_state["Init"]; 
 
-luabind::call_function<void>(ob,boost::ref<LuaAI_Proxy>(*(ai->m_proxy))  );
+if(! luabind::call_function<bool>( ob, boost::ref<LuaAI_Proxy>(*(ai->m_proxy))  )  )
+	{
+	delete ai;
+	return NULL;
+	}
 
 return (CreatureAI*)ai;
 

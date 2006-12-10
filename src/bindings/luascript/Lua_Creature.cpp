@@ -25,10 +25,13 @@ void lb_Creature_MonsterSay(Creature* cr, char const *text, uint32 language, lua
 	cr->MonsterSay(text,language,targetGUID.m_val);
 	}
 
-LuaAI* lb_Creature_GetLuaAI(Creature* cr) 
+LuaAI_Proxy* lb_Creature_GetLuaAI(Creature* cr) 
 	{
-	//this may be very dangerous if used on creature that dont have lua_ai
-	return (LuaAI*)&cr->AI();
+	debug_log("lb_Creature_GetLuaAI");
+	if( isRegistered_LuaAI(cr) )
+		return  ( (LuaAI*)&cr->AI() )->m_proxy ;
+	error_log("[Lua] : AI : WARNING : Trying to get LuaAI of creature that dont have such");
+	return NULL;
 	}
 
 int lb_Export_Creature(lua_State* L)
@@ -38,7 +41,7 @@ using namespace luabind;
 module(L)
 [
     class_<Creature , Unit >("Creature")
-	/*.def("GetLuaAI", &lb_Creature_GetLuaAI) NOT SAFE FOR NOW*/
+	.def("GetLuaAI", &lb_Creature_GetLuaAI)
 	.def("GetScriptName"                        ,&lb_Creature_GetScriptName)
 	.def("QUEST_DIALOG_STATUS"  ,&lb_Creature_QUEST_DIALOG_STATUS)
 	/*from Creature.h */

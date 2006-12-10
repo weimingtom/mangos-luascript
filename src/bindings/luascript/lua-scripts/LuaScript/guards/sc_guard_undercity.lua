@@ -1,10 +1,14 @@
 scriptname = "guard_undercity"
+DisableCppScript( scriptname )
 
 --Taken from ScriptsDev, converted - SABROG
 
 m_scripts[scriptname] = {}
 
 m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
+
+-- TODO this is used by  guard_default_ai , if script is not part of it anymore pls remove this
+guard_default_ai_Gossip_Hello(player,_Creature)
 
 	    player:ADD_GOSSIP_ITEM( 0, "The Bank"				, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
 	    player:ADD_GOSSIP_ITEM( 0, "Bat Handler"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)
