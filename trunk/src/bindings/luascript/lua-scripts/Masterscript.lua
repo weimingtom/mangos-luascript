@@ -33,6 +33,7 @@ include ('LuaScript/CallBacks.lua')
 include ('LuaScript/Mango.lua')	-- Mango object
 include ('LuaScript/Mango/Mango.IO.lua')	-- Mango IO Library
 include ('LuaScript/Mango/Mango.DataStore.lua')	-- Mango DataStore Library
+include ('LuaScript/Mango/Mango.Stubby.lua')	-- Mango Stubby Library
 
 -- Then load the scripts
 printf("\n")
