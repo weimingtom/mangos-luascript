@@ -57,7 +57,7 @@ function SendDefaultMenu_misc_bombay(player, _Creature, action)
 		spell_triggered = false
 	end
 
-	_Creature:CastSpell(player, spell, true)
+	_Creature:CastSpell(player, 24244 , true, nil)
 
 	player:SEND_GOSSIP_MENU(gossip_menu_id,_Creature:GetGUID());
 	return RETURN_OK
