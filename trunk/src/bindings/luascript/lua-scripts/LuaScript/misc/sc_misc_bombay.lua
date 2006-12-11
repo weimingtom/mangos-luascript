@@ -16,8 +16,8 @@ DisableCppScript( scriptname ) -- This script does not have a CPP equalivant or 
 m_scripts[scriptname] = {}
 m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
 
--- TODO this is used by  guard_default_ai , if script is not part of it anymore pls remove this
-guard_default_ai_Gossip_Hello(player,_Creature)
+-- TODO this is used by  misc_bombay_ai , if script is not part of it anymore pls remove this
+misc_bombay_ai_Gossip_Hello(player,_Creature)
 
 	player:ADD_GOSSIP_ITEM( 0, "Low spirits"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
 	player:ADD_GOSSIP_ITEM( 0, "Bad hang nail"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)
