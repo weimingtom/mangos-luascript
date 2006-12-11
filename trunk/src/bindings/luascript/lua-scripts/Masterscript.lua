@@ -24,6 +24,7 @@ printf("\n")
 printf("LuaScript: Loading libraries...\n")
 printf("\n")
 
+include ('LuaScript/Extension.lua')
 include ('LuaScript/defines.lua')
 include ('LuaScript/ScriptMgr.lua')
 include ('LuaScript/AI.lua')

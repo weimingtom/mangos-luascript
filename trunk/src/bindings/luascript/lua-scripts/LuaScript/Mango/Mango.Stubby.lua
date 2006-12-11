@@ -414,13 +414,13 @@ Mango.Stubby = {
 	UnregisterFunctionHook = unregisterFunctionHook,
 }
 
-function test ()
-	Mango.IO.printf("Hook works!!\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+function testHookStubby()
+	Mango.IO.printf("Mango.Stubby Hook test succeeded!\n")
 end
-function test2 ()
-	Mango.IO.printf("Testing Stubby Hook...\n")
-end
-Mango.Stubby.RegisterFunctionHook("test2", 1, test);
-test2()
 
+function testCallStubby()
+	Mango.IO.printf("Testing the Mango.Stubby Hook utility...\n")
+end
+Mango.Stubby.RegisterFunctionHook("testCallStubby", 1, testHookStubby);
+testCallStubby()
 
