@@ -4,6 +4,9 @@ Mango.IO = {
 	printf  = function (...)
 		io.write(string.format(unpack(arg)));
 	end;
+	print  = function (...)
+		io.write(string.format(unpack(arg)));
+	end;
 	log = function (...)
 		log_debug(string.format(unpack(arg)));
 	end;
