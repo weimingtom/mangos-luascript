@@ -55,6 +55,7 @@ function SendDefaultMenu_misc_bombay(player, _Creature, action)
 	end
 
 	_Creature:CastSpell(player, spell, spell_triggered, 0);
+	return RETURN_OK
 end
 
 m_scripts[scriptname]["GossipSelect"] = function(player, _Creature, sender, action)
