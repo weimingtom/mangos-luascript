@@ -6,6 +6,8 @@ default_ai = { }
 --EVERY script should have the first 3 functions
 --If you dont have them , then simply your script wont be loaded ;)
 
+if isNULL(LuaAI) then return end -- DONT FORGET this please ,of you will get your problems :)
+
 --Called on every new object initialization
 default_ai["Init"] = function(LuaAI)
 log("default_ai Init")
