@@ -1,10 +1,6 @@
 scriptname = "misc_bombay"
 gossip_menu_id = 150000 -- Our first misc, we start it from 150000
 
--- SQL Updates:
--- UPDATE `creature_template` SET `ScriptName` = 'misc_bombay' WHERE `entry` = 10578
--- UPDATE `creature_template` SET `npcflag` = '65' WHERE `entry` =10578 LIMIT 1 ;
-
 DisableCppScript( scriptname ) -- This script does not have a CPP equalivant or atleast not a 'stable' one
 
 -- Work in progress for Bom'bay, Witch Doctor in Training 
@@ -16,13 +12,13 @@ DisableCppScript( scriptname ) -- This script does not have a CPP equalivant or 
 m_scripts[scriptname] = {}
 m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
 
-	player:ADD_GOSSIP_ITEM( 0, "Low spirits"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
+	player:ADD_GOSSIP_ITEM( 0, "Low spirits"				, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
 	player:ADD_GOSSIP_ITEM( 0, "Bad hang nail"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)
-	player:ADD_GOSSIP_ITEM( 0, "Feeling underpowered"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3)
-	player:ADD_GOSSIP_ITEM( 0, "Jungle Fever"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4)
-	player:ADD_GOSSIP_ITEM( 0, "Uni-brow"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5)
-	player:ADD_GOSSIP_ITEM( 0, "Whiplash"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6)
-	player:ADD_GOSSIP_ITEM( 0, "I don't want to go back to work"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7)
+	player:ADD_GOSSIP_ITEM( 0, "Feeling underpowered"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3)
+	player:ADD_GOSSIP_ITEM( 0, "Jungle Fever"				, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4)
+	player:ADD_GOSSIP_ITEM( 0, "Uni-brow"				, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5)
+	player:ADD_GOSSIP_ITEM( 0, "Whiplash"				, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6)
+	player:ADD_GOSSIP_ITEM( 0, "I don't want to go back to work", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7)
 
 	player:SEND_GOSSIP_MENU(gossip_menu_id,_Creature:GetGUID());
 	return RETURN_OK
@@ -57,10 +53,9 @@ function SendDefaultMenu_misc_bombay(player, _Creature, action)
 		spell_triggered = false
 	end
 
-	_Creature:CastSpell(player, 24244 , true, nil)
-
-	player:SEND_GOSSIP_MENU(gossip_menu_id,_Creature:GetGUID());
-	return RETURN_OK
+        player:CastSpell(player, spell, spell_triggered, nil)
+        player:CLOSE_GOSSIP_MENU()
+        return RETURN_OK
 end
 
 m_scripts[scriptname]["GossipSelect"] = function(player, _Creature, sender, action)
@@ -101,4 +96,6 @@ m_scripts[scriptname]["NPCDialogStatus"] = function(player, _Creature)
 return(128)
 end
 
--- Register a dummy AI
+-- Use default AI
+m_AI["misc_bombay"] = default_ai
+
