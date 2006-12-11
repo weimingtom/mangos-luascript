@@ -52,9 +52,12 @@ function SendDefaultMenu_misc_bombay(player, _Creature, action)
 	elseif num == 7 then
 		spell = 16709 -- hexed
 		spell_triggered = false	
+	else
+		spell = 24244 -- Grown
+		spell_triggered = false
 	end
 
-	--_Creature:CastSpell(player, spell, spell_triggered);
+	_Creature:CastSpell(player, spell, true)
 
 	player:SEND_GOSSIP_MENU(gossip_menu_id,_Creature:GetGUID());
 	return RETURN_OK
