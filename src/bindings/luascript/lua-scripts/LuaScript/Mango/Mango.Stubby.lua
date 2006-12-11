@@ -418,9 +418,10 @@ Mango.Stubby = {
 function test ()
 	Mango.IO.printf("Hook works!!\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 end
-Mango.Stubby.RegisterFunctionHook("Mango.Stubby.RegisterFunctionHook", 1, test);
-Mango.Stubby.RegisterFunctionHook("Mango.Stubby.RegisterFunctionHook", 2, test);
-Mango.Stubby.RegisterFunctionHook("Mango.Stubby.RegisterFunctionHook", 3, test);
-Mango.Stubby.RegisterFunctionHook("Mango.Stubby.RegisterFunctionHook", 4, test);
-Mango.Stubby.RegisterFunctionHook("Mango.Stubby.RegisterFunctionHook", 5, test);
+function test2 ()
+	Mango.IO.printf("Testing Stubby Hook...\n")
+end
+Mango.Stubby.RegisterFunctionHook("test2", 1, test);
+test2()
+
 
