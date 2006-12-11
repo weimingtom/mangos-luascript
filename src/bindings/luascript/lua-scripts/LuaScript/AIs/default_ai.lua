@@ -5,7 +5,7 @@ default_ai = { }
 
 --EVERY script should have the first 3 functions
 --If you dont have them , then simply your script wont be loaded ;)
-
+local LuaAI = _Creature:GetLuaAI() -- get AI class of creature , note not all creatures have such but only this with Lua AI`s
 if isNULL(LuaAI) then return end -- DONT FORGET this please ,of you will get your problems :)
 
 --Called on every new object initialization

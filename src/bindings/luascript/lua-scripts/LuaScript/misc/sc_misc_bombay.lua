@@ -99,4 +99,3 @@ return(128)
 end
 
 -- Register a dummy AI
-m_AI[scriptname] = guard_default_ai

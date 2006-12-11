@@ -157,4 +157,5 @@ m_AI["guard_darnassus"] = guard_default_ai
 m_AI["guard_dunmorogh"] = guard_default_ai
 m_AI["guard_durotar"] = guard_default_ai
 m_AI["guard_elwynnforest"] = guard_default_ai
+m_AI["misc_bombay"] = guard_default_ai
 
