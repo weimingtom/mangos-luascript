@@ -97,3 +97,6 @@ m_scripts[scriptname]["NPCDialogStatus"] = function(player, _Creature)
 
 return(128)
 end
+
+-- Register a dummy AI
+m_AI[scriptname] = default_ai
