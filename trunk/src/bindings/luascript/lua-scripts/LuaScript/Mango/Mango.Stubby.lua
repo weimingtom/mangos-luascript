@@ -404,7 +404,6 @@ end
 -- Setup our Stubby global object. All interaction is done
 -- via the methods exposed here.
 Mango.Stubby = {
-	VERSION = getRevision(),
 	Print = chatPrint,
 	Events = events,
 	HookCall = hookCall,
