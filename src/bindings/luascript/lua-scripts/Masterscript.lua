@@ -59,4 +59,5 @@ include ('LuaScript/guards/sc_guard_tirisfal.lua')
 include ('LuaScript/guards/sc_guard_undercity.lua')
 include ('LuaScript/AIs/sc_tranquil_gardens.lua')
 include ('LuaScript/AIs/sc_default_guard.lua')
+include ('LuaScript/misc/sc_misc_bombay.lua')
 
