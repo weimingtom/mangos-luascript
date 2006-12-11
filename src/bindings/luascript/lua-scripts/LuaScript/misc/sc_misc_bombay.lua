@@ -29,7 +29,7 @@ m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
 end
 
 function SendDefaultMenu_misc_bombay(player, _Creature, action)
-
+	player:SEND_GOSSIP_MENU(gossip_menu_id,_Creature:GetGUID());
 	return RETURN_OK
 end
 
