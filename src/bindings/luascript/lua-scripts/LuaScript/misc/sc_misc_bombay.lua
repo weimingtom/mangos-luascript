@@ -29,6 +29,33 @@ m_scripts[scriptname]["GossipHello"] = function(player,_Creature)
 end
 
 function SendDefaultMenu_misc_bombay(player, _Creature, action)
+	-- Select the spell (currently they are all random, is this correct?)
+	num = rand_range(1,7)
+	if num == 1 then
+		spell = 24244 -- Grown
+		spell_triggered = false
+	elseif num == 2 then
+		spell = 16712 -- Special brew (drunk)
+		spell_triggered = false
+	elseif num == 3 then
+		spell = 16716 -- Launch (fly up)
+		spell_triggered = false
+	elseif num == 4 then
+		spell = 16713 -- Ghostly
+		spell_triggered = false
+	elseif num == 5 then
+		spell = 16707 -- hexed
+		spell_triggered = false
+	elseif num == 6 then
+		spell = 16708 -- hexed
+		spell_triggered = false
+	elseif num == 7 then
+		spell = 16709 -- hexed
+		spell_triggered = false	
+	end
+
+	_Creature:CastSpell(player, spell, spell_triggered);
+
 	player:SEND_GOSSIP_MENU(gossip_menu_id,_Creature:GetGUID());
 	return RETURN_OK
 end
