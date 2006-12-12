@@ -44,7 +44,7 @@ Mango.Scripts.Base = {
 	end;
 
 	Create = function (scriptname)
-		return Mango.Scripts.Base.new(scriptname)
+		return Mango.Scripts.Base:new(scriptname)
 	end;
 
 	ClearInstances = function ()
