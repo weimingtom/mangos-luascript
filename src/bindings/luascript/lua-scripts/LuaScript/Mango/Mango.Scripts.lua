@@ -26,11 +26,6 @@ Mango.Scripts = {
 	end;
 
 }
-Mango.Scripts.Base = {}
-
--- Create the class
-Mango.Scripts.BaseClass = Class(Mango.Scripts.Base)
-
 
 -- The Scripts Base
 Mango.Scripts.Base = {
@@ -107,4 +102,7 @@ Mango.Scripts.Base = {
 	ChooseReward		= UnhandledEvent;
 	NPCDialogStatus		= UnhandledEvent_NPCDialogStatus;
 }
+
+-- Create the class
+Mango.Scripts.BaseClass = Class(Mango.Scripts.Base)
 printf("LuaScript: Loaded Mango Scripts library!\n")
