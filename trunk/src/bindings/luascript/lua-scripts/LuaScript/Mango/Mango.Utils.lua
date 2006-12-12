@@ -2,7 +2,7 @@ printf("LuaScript: Loading Mango Utils library...\n")
 -- Mango Utils Library
 Mango.Utils = {}
 
-// Next functions are used from gpeddler 2
+-- Next functions are used from gpeddler 2
 function Mango.Utils.ShallowCopy(fromTable, toTable)
   toTable = toTable or {} -- new table if not given
   local inx = nil
