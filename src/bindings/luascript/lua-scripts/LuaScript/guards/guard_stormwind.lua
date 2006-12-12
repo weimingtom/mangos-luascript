@@ -3,7 +3,6 @@
 
 -- Create the Mango Script Base object
 Guard_Stormwind = Mango.Scripts.Create('guard_stormwind');
-table.foreach(Guard_Stormwind, Mango.IO.printf)
 Guard_Stormwind:ForceLUA(); -- Don't use the CPP version if valid
 
 -- Function prototypes (to keep it clean)
@@ -275,3 +274,4 @@ Guard_Stormwind.GossipSelect= Guard_Stormwind_GossipSelect;
 
 -- Activate (run) the script
 Guard_Stormwind:Activate();
+table.foreach(Guard_Stormwind, Mango.IO.printf);
