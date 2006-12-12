@@ -19,7 +19,7 @@ function Guard_Stormwind_GossipHello(player,_Creature)
 	-- TODO this is used by  guard_default_ai , if script is not part of it anymore pls remove this
 	guard_default_ai_Gossip_Hello(player,_Creature)
 
-	player:ADD_GOSSIP_ITEM( 0, "Auction House"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
+	player:ADD_GOSSIP_ITEM( 0, "Auction House(debug)"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
 	player:ADD_GOSSIP_ITEM( 0, "Bank of Stormwind"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)
 	player:ADD_GOSSIP_ITEM( 0, "Deeprun Tram"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3)
 	player:ADD_GOSSIP_ITEM( 0, "The Inn"			, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4)
