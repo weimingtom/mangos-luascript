@@ -269,8 +269,8 @@ function Guard_Stormwind_SendProfTrainerMenu(player, _Creature, action)
 end
 
 -- Assign the functions
-Guard_Stormwind:GossipHello = Guard_Stormwind_GossipHello;
-Guard_Stormwind:GossipSelect= Guard_Stormwind_GossipSelect;
+Guard_Stormwind.GossipHello = Guard_Stormwind_GossipHello;
+Guard_Stormwind.GossipSelect= Guard_Stormwind_GossipSelect;
 
 -- Activate (run) the script
 Guard_Stormwind:Activate();
