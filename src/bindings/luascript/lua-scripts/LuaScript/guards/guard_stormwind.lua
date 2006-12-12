@@ -6,18 +6,18 @@ Guard_Stormwind = Mango.Scripts.Create('guard_stormwind');
 Guard_Stormwind:ForceLUA(); -- Don't use the CPP version if valid
 
 -- Function prototypes (to keep it clean)
--- local Guard_Stormwind_GossipHello
--- local Guard_Stormwind_GossipSelect
--- local Guard_Stormwind_SendDefaultMenu
--- local Guard_Stormwind_SendBattleMasterMenu
--- local Guard_Stormwind_SendClassTrainerMenu
--- local Guard_Stormwind_SendProfTrainerMenu
+local Guard_Stormwind_GossipHello
+local Guard_Stormwind_GossipSelect
+local Guard_Stormwind_SendDefaultMenu
+local Guard_Stormwind_SendBattleMasterMenu
+local Guard_Stormwind_SendClassTrainerMenu
+local Guard_Stormwind_SendProfTrainerMenu
 
 -- The actual functions
 -- Send the first menu (with the selections)
 function Guard_Stormwind_GossipHello(player,_Creature)
 	-- TODO this is used by  guard_default_ai , if script is not part of it anymore pls remove this
-	guard_default_ai_Gossip_Hello(player,_Creature)
+	-- guard_default_ai_Gossip_Hello(player,_Creature)
 
 	player:ADD_GOSSIP_ITEM( 0, "Auction House"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
 	player:ADD_GOSSIP_ITEM( 0, "Bank of Stormwind"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)
