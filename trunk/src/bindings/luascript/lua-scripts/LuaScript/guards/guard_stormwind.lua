@@ -274,5 +274,4 @@ Guard_Stormwind.GossipSelect= Guard_Stormwind_GossipSelect;
 
 -- Activate (run) the script
 Mango.IO.print(Guard_Stormwind.m_scriptname);
-Mango.IO.print(Guard_Stormwind:m_scriptname);
 -- Guard_Stormwind.Activate();
