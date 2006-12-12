@@ -22,10 +22,19 @@ printf("LuaScript: Loading Mango Scripts library...\n")
 Mango.Scripts = {
 	Base = {};
 	New = function (scriptname)
-		return Mango.Scripts.Base.Create(scriptname)
+		Mango.Scripts.Base.Create(scriptname)
 	end;
 
 }
+Mango.Scripts.Base = {}
+
+-- Create the class
+Mango.Scripts.BaseClass = Class(Mango.Scripts.Base)
+
+function Mango.Scripts.Base:new(scriptname)
+	return setmetatable( {m_scriptname = scriptname}, Mango.Scripts.BaseClass)
+end
+
 -- The Scripts Base
 Mango.Scripts.Base = {
 	m_scriptname = nil;
@@ -34,13 +43,7 @@ Mango.Scripts.Base = {
 	m_active = false;
 
 	Create = function (scriptname)
-		local self = Mango.Utils.ShallowCopy(Mango.Scripts.Base)
-		self.m_scriptname = scriptname
-		-- remove copy of static data from this object
-		self.m_instances = nil
-		-- add the new Mango.Scripts.Base to the static list
-		table.insert(Mango.Scripts.Base.m_instances, self)
-		return self
+		return Mango.Scripts.Base:new(scriptname)
 	end;
 
 	ClearInstances = function ()
