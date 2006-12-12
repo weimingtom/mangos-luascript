@@ -31,9 +31,6 @@ Mango.Scripts.Base = {}
 -- Create the class
 Mango.Scripts.BaseClass = Class(Mango.Scripts.Base)
 
-function Mango.Scripts.Base:new(scriptname)
-	return setmetatable( {m_scriptname = scriptname}, Mango.Scripts.BaseClass)
-end
 
 -- The Scripts Base
 Mango.Scripts.Base = {
@@ -41,6 +38,10 @@ Mango.Scripts.Base = {
 	m_instances = {};
 	m_forcelua = false;
 	m_active = false;
+
+	new = function (scriptname)
+		return setmetatable( {m_scriptname = scriptname}, Mango.Scripts.BaseClass)
+	end;
 
 	Create = function (scriptname)
 		return Mango.Scripts.Base.new(scriptname)
