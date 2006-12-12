@@ -274,4 +274,5 @@ Guard_Stormwind.GossipSelect= Guard_Stormwind_GossipSelect;
 
 -- Activate (run) the script
 Guard_Stormwind:Activate();
--- table.foreach(Guard_Stormwind, Mango.IO.printf); -- debug
+table.foreach(m_AI, Mango.IO.printf); -- debug
+-- m_AI["guard_stormwind"] = guard_default_ai
