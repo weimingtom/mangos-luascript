@@ -57,10 +57,10 @@ include ('LuaScript/guards/sc_guard_elwynnforest.lua')
 include ('LuaScript/guards/sc_guard_ironforge.lua')
 include ('LuaScript/guards/sc_guard_mulgore.lua')
 include ('LuaScript/guards/sc_guard_orgrimmar.lua')
-include ('LuaScript/guards/sc_guard_teldrassil.lua')
-include ('LuaScript/guards/sc_guard_tirisfal.lua')
+include ('LuaScript/guards/guard_teldrassil.lua') 		-- Using Mango Scripts Library
+include ('LuaScript/guards/guard_tirisfal.lua') 		-- Using Mango Scripts Library
 include ('LuaScript/guards/sc_guard_undercity.lua')
-include ('LuaScript/guards/guard_stormwind.lua') -- Using Mango Scripts Library
+include ('LuaScript/guards/guard_stormwind.lua') 		-- Using Mango Scripts Library
 include ('LuaScript/AIs/sc_default_guard.lua')
 include ('LuaScript/AIs/sc_tranquil_gardens.lua')
 include ('LuaScript/misc/sc_misc_bombay.lua')
