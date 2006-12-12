@@ -15,9 +15,9 @@ local Guard_Stormwind_SendProfTrainerMenu
 
 -- The actual functions
 -- Send the first menu (with the selections)
-function Guard_Stormwind_GossipHello(player,_Creature)
+function Guard_Stormwind_GossipHello(self, player,_Creature)
 	-- TODO this is used by  guard_default_ai , if script is not part of it anymore pls remove this
-	guard_default_ai_Gossip_Hello(player,_Creature)
+	guard_default_ai_Gossip_Hello(self, player,_Creature)
 
 	player:ADD_GOSSIP_ITEM( 0, "Auction House"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1)
 	player:ADD_GOSSIP_ITEM( 0, "Bank of Stormwind"		, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2)
@@ -274,5 +274,3 @@ Guard_Stormwind.GossipSelect= Guard_Stormwind_GossipSelect;
 
 -- Activate (run) the script
 Guard_Stormwind:Activate();
-m_AI["guard_stormwind"] = guard_default_ai
-table.foreach(m_AI, Mango.IO.printf); -- debug
