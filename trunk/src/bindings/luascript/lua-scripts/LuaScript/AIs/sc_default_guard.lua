@@ -7,7 +7,7 @@ function guard_default_ai_Gossip_Hello(player,_Creature)
 
 
 local LuaAI = _Creature:GetLuaAI() -- get AI class of creature , note not all creatures have such but only this with Lua AI`s
-
+if LuaAI == nil then return end
 if isNULL(LuaAI) then return end -- DONT FORGET this please ,of you will get your problems :)
 
 local data = LuaAI:Data()
