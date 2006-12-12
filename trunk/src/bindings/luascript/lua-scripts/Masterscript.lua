@@ -35,6 +35,7 @@ include ('LuaScript/Mango.lua')	-- Mango object
 include ('LuaScript/Mango/Mango.IO.lua')	-- Mango IO Library
 include ('LuaScript/Mango/Mango.DataStore.lua')	-- Mango DataStore Library
 include ('LuaScript/Mango/Mango.Stubby.lua')	-- Mango Stubby Library
+include ('LuaScript/Mango/Mango.Scripts.lua')	-- Mango Scripts Library
 
 -- Then load the scripts
 printf("\n")
@@ -55,7 +56,7 @@ include ('LuaScript/guards/sc_guard_elwynnforest.lua')
 include ('LuaScript/guards/sc_guard_ironforge.lua')
 include ('LuaScript/guards/sc_guard_mulgore.lua')
 include ('LuaScript/guards/sc_guard_orgrimmar.lua')
-include ('LuaScript/guards/sc_guard_stormwind.lua')
+include ('LuaScript/guards/guard_stormwind.lua')
 include ('LuaScript/guards/sc_guard_teldrassil.lua')
 include ('LuaScript/guards/sc_guard_tirisfal.lua')
 include ('LuaScript/guards/sc_guard_undercity.lua')
