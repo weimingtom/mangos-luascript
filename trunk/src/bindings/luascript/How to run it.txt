@@ -10,8 +10,8 @@ ON WINDOWS:
 3.Open your mangos-project with vs2003 
 4.remove script project
 5.File->add project->add existing project and navigate to luascript.vcproj
-6.copy contents of lua-scripts folder where your mangosd.exe is , so that Masterscript.lua is just where is your mangosd.exe
-8.you are ready ... compile and run ... :)
+6.copy the contents of the lua-scripts folder to the folder where your mangosd.exe is run from
+7.you are ready ... compile and run ... :)
 
 -----------
 ON LINUX:
@@ -38,7 +38,8 @@ make
 #do this as su-user
 su -c "make install"
 
-4.copy contents of lua-scripts folder where your mangosd is , so that Masterscript.lua is just where is your mangosd executable 
+5.copy the contents of the lua-scripts folder to the folder where your run mangosd from
+Example: if you run it like bin/mangosd, put it before the 'bin' folder
 
 To start mangos:
 cd /where/your/mangosd/executeble is/
