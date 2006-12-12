@@ -34,7 +34,7 @@ Mango.Scripts.Base = {
 	m_active = false;
 
 	Create = function (scriptname)
-		local self = Mango.Utils.ShallowCopy(Mango.Scripts.Base)
+		local self = Mango.Utils:ShallowCopy(Mango.Scripts.Base)
 		self.m_scriptname  = scriptname
 		-- remove copy of static data from this object
 		self.m_instances = nil
