@@ -3,7 +3,7 @@
 
 -- Create the Mango Script Base object
 Guard_Stormwind = Mango.Scripts.New('guard_stormwind');
-Guard_Stormwind.ForceLUA(); -- Don't use the CPP version if valid
+Guard_Stormwind:ForceLUA(); -- Don't use the CPP version if valid
 
 -- Function prototypes (to keep it clean)
 local Guard_Stormwind_GossipHello
@@ -269,8 +269,8 @@ function Guard_Stormwind_SendProfTrainerMenu(player, _Creature, action)
 end
 
 -- Assign the functions
-Guard_Stormwind.GossipHello = Guard_Stormwind_GossipHello;
-Guard_Stormwind.GossipSelect= Guard_Stormwind_GossipSelect;
+Guard_Stormwind:GossipHello = Guard_Stormwind_GossipHello;
+Guard_Stormwind:GossipSelect= Guard_Stormwind_GossipSelect;
 
 -- Activate (run) the script
 Guard_Stormwind:Activate();
