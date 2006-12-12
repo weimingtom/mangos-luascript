@@ -29,13 +29,12 @@ Mango.Scripts = {
 
 -- The Scripts Base
 Mango.Scripts.Base = {
-	m_scriptname = nil;
 	m_instances = {};
 	m_forcelua = false;
 	m_active = false;
 
 	new = function (scriptname)
-		return setmetatable( {m_scriptname = scriptname}, Mango.Scripts.Base)
+		return setmetatable( {m_scriptname = scriptname}, Mango.Scripts.BaseClass)
 	end;
 
 	Create = function (scriptname)
