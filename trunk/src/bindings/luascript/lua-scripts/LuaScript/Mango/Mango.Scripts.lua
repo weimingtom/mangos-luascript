@@ -45,41 +45,41 @@ Mango.Scripts.Base = {
 		Mango.Scripts.Base.m_instances = {};
 	end;
 
-	Activate = function ()
-		m_active = true;
+	Activate = function (self)
+		self.m_active = true;
 		-- If m_forcelua is true, disable CPP usage (NOTE: Not possible to switch back to the CPP version!)
-		if (m_forcelua) then
-			DisableCppScript(m_scriptname);
+		if (self.m_forcelua) then
+			DisableCppScript(self.m_scriptname);
 		end;
 		-- Publish the script
-		m_scripts[m_scriptname] = {}
-		m_scripts[m_scriptname]["GossipHello"] = GossipHello;
-		m_scripts[m_scriptname]["GossipSelect"] = GossipSelect;
-		m_scripts[m_scriptname]["GossipSelectWithCode"] = GossipSelectWithCode;
-		m_scripts[m_scriptname]["QuestAccept"] = QuestAccept;
-		m_scripts[m_scriptname]["QuestSelect"] = QuestSelect;
-		m_scripts[m_scriptname]["QuestComplete"] = QuestComplete;
-		m_scripts[m_scriptname]["ChooseReward"] = ChooseReward;
-		m_scripts[m_scriptname]["NPCDialogStatus"] = NPCDialogStatus;
+		m_scripts[self.m_scriptname] = {}
+		m_scripts[self.m_scriptname]["GossipHello"] = self.GossipHello;
+		m_scripts[self.m_scriptname]["GossipSelect"] = self.GossipSelect;
+		m_scripts[self.m_scriptname]["GossipSelectWithCode"] = self.GossipSelectWithCode;
+		m_scripts[self.m_scriptname]["QuestAccept"] = self.QuestAccept;
+		m_scripts[m_scriptname]["QuestSelect"] = self.QuestSelect;
+		m_scripts[self.m_scriptname]["QuestComplete"] = self.QuestComplete;
+		m_scripts[self.m_scriptname]["ChooseReward"] = self.ChooseReward;
+		m_scripts[self.m_scriptname]["NPCDialogStatus"] = self.NPCDialogStatus;
 	end;
 
-	Deactive = function ()
-		m_active = false;
+	Deactive = function (self)
+		self.m_active = false;
 		-- Deactivate the script
-		m_scripts[m_scriptname] = {}
+		m_scripts[self.m_scriptname] = {}
 	end;
 
-	IsActive = function()
-		return m_active;
+	IsActive = function(self)
+		return self.m_active;
 	end;
 
-	GetScriptName = function()
-		return m_scriptname;
+	GetScriptName = function(self)
+		return self.m_scriptname;
 	end;
 
 	-- Force LUA usage instead of CPP (if valid)
-	ForceLUA = function ()
-		m_forcelua = true;
+	ForceLUA = function (self)
+		self.m_forcelua = true;
 	end;
 
 	-- Default functions
