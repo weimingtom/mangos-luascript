@@ -35,7 +35,8 @@ Mango.Scripts.Base = {
 
 	Create = function (scriptname)
 		local self = Mango.Utils.ShallowCopy(Mango.Scripts.Base)
-		self.m_scriptname  = scriptname
+		self.m_scriptname = scriptname
+		Mango.IO.printf('Got scriptname' .. scriptname .. "\n");
 		-- remove copy of static data from this object
 		self.m_instances = nil
 		-- add the new Mango.Scripts.Base to the static list
