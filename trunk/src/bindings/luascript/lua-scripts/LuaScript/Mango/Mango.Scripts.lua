@@ -21,7 +21,7 @@ printf("LuaScript: Loading Mango Scripts library...\n")
 
 Mango.Scripts = {
 	Base = {};
-	New = function (scriptname)
+	Create = function (scriptname)
 		return Mango.Scripts.Base.Create(scriptname)
 	end;
 
