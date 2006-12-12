@@ -49,6 +49,7 @@ Mango.Scripts.Base = {
 		self.m_active = true;
 		-- If m_forcelua is true, disable CPP usage (NOTE: Not possible to switch back to the CPP version!)
 		if (self.m_forcelua) then
+			self.m_forcelua = false;
 			DisableCppScript(self.m_scriptname);
 		end;
 		-- Publish the script
