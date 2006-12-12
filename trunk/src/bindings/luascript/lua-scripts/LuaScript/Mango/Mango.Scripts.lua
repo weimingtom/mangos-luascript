@@ -35,7 +35,7 @@ Mango.Scripts.Base = {
 	m_active = false;
 
 	new = function (scriptname)
-		return setmetatable( {m_scriptname = scriptname}, Mango.Scripts.BaseClass)
+		return setmetatable( {m_scriptname = scriptname}, Mango.Scripts.Base)
 	end;
 
 	Create = function (scriptname)
