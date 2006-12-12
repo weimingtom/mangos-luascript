@@ -53,14 +53,14 @@ Mango.Scripts.Base = {
 		end;
 		-- Publish the script
 		m_scripts[self.m_scriptname] = {}
-		m_scripts[self.m_scriptname]["GossipHello"] = self.GossipHello;
-		m_scripts[self.m_scriptname]["GossipSelect"] = self.GossipSelect;
-		m_scripts[self.m_scriptname]["GossipSelectWithCode"] = self.GossipSelectWithCode;
-		m_scripts[self.m_scriptname]["QuestAccept"] = self.QuestAccept;
-		m_scripts[m_scriptname]["QuestSelect"] = self.QuestSelect;
-		m_scripts[self.m_scriptname]["QuestComplete"] = self.QuestComplete;
-		m_scripts[self.m_scriptname]["ChooseReward"] = self.ChooseReward;
-		m_scripts[self.m_scriptname]["NPCDialogStatus"] = self.NPCDialogStatus;
+		m_scripts[self.m_scriptname]["GossipHello"] 		= self.GossipHello;
+		m_scripts[self.m_scriptname]["GossipSelect"]		= self.GossipSelect;
+		m_scripts[self.m_scriptname]["GossipSelectWithCode"] 	= self.GossipSelectWithCode;
+		m_scripts[self.m_scriptname]["QuestAccept"] 		= self.QuestAccept;
+		m_scripts[self.m_scriptname]["QuestSelect"] 		= self.QuestSelect;
+		m_scripts[self.m_scriptname]["QuestComplete"] 		= self.QuestComplete;
+		m_scripts[self.m_scriptname]["ChooseReward"] 		= self.ChooseReward;
+		m_scripts[self.m_scriptname]["NPCDialogStatus"] 	= self.NPCDialogStatus;
 	end;
 
 	Deactive = function (self)
