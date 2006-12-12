@@ -2,7 +2,7 @@
 -- Converted by SinnerG
 
 -- Create the Mango Script Base object
-Guard_Stormwind = Mango.Scripts:New('guard_stormwind');
+Guard_Stormwind = Mango.Scripts.New('guard_stormwind');
 Guard_Stormwind:ForceLUA(); -- Don't use the CPP version if valid
 
 -- Function prototypes (to keep it clean)
