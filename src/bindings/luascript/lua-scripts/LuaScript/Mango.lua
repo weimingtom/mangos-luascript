@@ -3,7 +3,7 @@ printf("LuaScript: Loading the Mango library...\n")
 -- Mango, Fruit we all like :)
 --
 Mango = {
-	version = 0.05; -- Should increase + 0.01 on each time a library gets added
+	version = 0.06; -- Should increase + 0.01 on each time a library gets added
 
 	-- Input/Output Libraries
 	IO = {};
@@ -14,7 +14,7 @@ Mango = {
 	-- Stubby Libraries
 	Stubby = {};
 
-	-- Scripts Libraries
-	Scripts = {};
+	-- Utils Libraries
+	Utils = {};
 };
 printf("LuaScript: Loaded the Mango library!\n")
